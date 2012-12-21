@@ -54,15 +54,27 @@
    				</div>  <!-- container -->
 		</div>   <!-- navbar inner -->
 	</div>   <!-- navbar -->
-	<div class="container" ng-app>
+	<div class="container" ng-app="loyallyApp">
        		<h2>What Is Angular?</h2>
        		<p>
-AngularJS is a structural framework for dynamic web apps. It lets you use HTML as your template language and lets you extend HTML's syntax to express your application's components clearly and succinctly. Out of the box, it eliminates much of the code you currently write through data binding and dependency injection. And it all happens in JavaScript within the browser making it an ideal partner with any server technology.
+AngularJS is a structural framework for dynamic web apps. 
+It lets you use HTML as your template language and lets you extend HTML's syntax to 
+express your application's components clearly and succinctly. Out of the box, 
+it eliminates much of the code you currently write through data binding and dependency injection. 
+And it all happens in JavaScript within the browser making it an ideal partner with any server technology.
 			</p>
 			<p>
-Angular is what HTML would have been had it been designed for applications. HTML is a great declarative language for static documents. It does not contain much in the way of creating applications, and as a result building web applications is an exercise in what do I have to do, so that I trick the browser in to doing what I want.
+Angular is what HTML would have been had it been designed for applications. 
+HTML is a great declarative language for static documents. It does not contain much in the way of 
+creating applications, and as a result building web applications is an exercise in what do I 
+have to do, so that I trick the browser in to doing what I want.
             </p>
-            <div ng-controller="ShareCtrl"><a href="#">Share {{shareUrl}} on Facebook</a></div>
+            <div ng-controller="ShareCtrl">
+            	<!-- Use shareable directive perhaps?? -->
+          			<p>Enter URL to share: <input ng-model="url" /></p>
+            		<p>URL to be shared using directives will be <span share-url="url"></span></p>
+             	
+            </div>
             <hr />
       		<footer>
         		<p>&copy; M & S Worldwide 2012</p>
