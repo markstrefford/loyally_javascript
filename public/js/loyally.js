@@ -1,11 +1,26 @@
 'use strict';
 
 // Initial URL to share.  
-// Todo - Replace this with $location
+// But really do we need a directive??
 
 function ShareCtrl($scope, $location) {
+	$scope.url = location + "?shareID=1234";
+}
+
+
+
+
+
+
+
+
+/*
+ * THIS IS ALL UNUSED, BUT KEPT HERE FOR REFERENCE PURPOSES AND FOR IDEAS LATER !!!
+ * 
+ */
+function ShareCtrl2($scope, $location) {
 	//$scope.url="http://localhost/~Mark/myblog.com";
-	$scope.url = location;
+	$scope.url2 = location;
 }
 
 /* 
@@ -28,4 +43,5 @@ angular.module('loyallyApp', [])
 			}	
 		}	
 	})
+
 

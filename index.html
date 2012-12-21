@@ -71,10 +71,11 @@ have to do, so that I trick the browser in to doing what I want.
             </p>
             <div ng-controller="ShareCtrl">
             	<!-- Use shareable directive perhaps?? -->
-          			<p>Enter URL to share: <input ng-model="url" /></p>
-            		<p>URL to be shared using directives will be <span share-url="url"></span></p>
-             	
-            </div>
+          			<p>URL to share: <span share-url ="url"></span></p> 
+          	</div>
+          	<div ng-controller="ShareCtrl2">
+          		<p>URL to share: <a href="{{url2}}">{{url2}}</a></p>
+          	</div>	
             <hr />
       		<footer>
         		<p>&copy; M & S Worldwide 2012</p>
