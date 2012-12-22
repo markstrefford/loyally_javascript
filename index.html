@@ -69,12 +69,8 @@ HTML is a great declarative language for static documents. It does not contain m
 creating applications, and as a result building web applications is an exercise in what do I 
 have to do, so that I trick the browser in to doing what I want.
             </p>
-            <div ng-controller="ShareCtrl">
-            	<!-- Use shareable directive perhaps?? -->
-          			<p>URL to share: <span share-url ="url"></span></p> 
-          	</div>
-          	<div ng-controller="ShareCtrl2">
-          		<p>URL to share: <a href="{{url2}}">{{url2}}</a></p>
+          	<div ng-controller="ShareCtrl">
+          		<p>URL to share: <a href="{{url}}">{{url}}</a></p>
           	</div>	
             <hr />
       		<footer>
