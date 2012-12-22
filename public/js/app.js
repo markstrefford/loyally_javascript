@@ -1,15 +1,8 @@
 'use strict';
 
-// Initial URL to share.  
-// But really do we need a directive??
+/* App Module */
 
-function ShareCtrl($scope, $location) {
-	$scope.url = location + "?shareID=1234";
-}
-
-
-
-
+angular.module('share', ['shareServices']);
 
 
 
