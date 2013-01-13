@@ -2,7 +2,7 @@
 
 /* App Module */
 
-angular.module('share', ['shareServices']);
+angular.module('share', ['shareServices', 'ngCookies']);
 
 
 

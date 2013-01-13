@@ -27,7 +27,8 @@
        	<script src="public/js/jquery/jquery-1.7.1.min.js" type="text/javascript"></script>
       	<script src="public/js/angularjs/angular.js"  type="text/javascript"></script> 
       	<script src="public/js/angularjs/angular-resource.js" type="text/javascript"></script>
-      	
+        <script src="public/js/angularjs/angular-cookies.js" type="text/javascript"></script>
+
       	<!-- Todo - This will move to be hosted on loyally eventually! -->
      	<script src="public/js/app.js" type="text/javascript"></script>
       	<script src="public/js/controllers.js" type="text/javascript"></script>
@@ -73,7 +74,10 @@ have to do, so that I trick the browser in to doing what I want.
             </p>
           	<div ng-controller="ShareCtrl">
           		<p>URL to share: <a href="{{url}}">{{url}}</a></p>
-          	</div>	
+          	</div>
+            <div ng-controller="ShareCtrlFb">
+                <p>Sharing using CtrlFb and urlFb... {{urlFb}}></p>
+            </div>
             <hr />
       		<footer>
         		<p>&copy; M & S Worldwide 2012</p>
