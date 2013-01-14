@@ -57,7 +57,7 @@
    				</div>  <!-- container -->
 		</div>   <!-- navbar inner -->
 	</div>   <!-- navbar -->
-	<div class="container" ng-app="share">
+	<div class="container" >
        		<h2>What Is Angular?</h2>
        		<p>
 AngularJS is a structural framework for dynamic web apps. 
@@ -72,12 +72,28 @@ HTML is a great declarative language for static documents. It does not contain m
 creating applications, and as a result building web applications is an exercise in what do I 
 have to do, so that I trick the browser in to doing what I want.
             </p>
-          	<div ng-controller="ShareCtrl">
-          		<p>URL to share: <a href="{{url}}">{{url}}</a></p>
-          	</div>
-            <div ng-controller="ShareCtrlFb">
-                <p>Sharing using CtrlFb and urlFb... {{urlFb}}></p>
-            </div>
+
+            <!-- <section ng-app="share">
+                <div ng-controller="ShareCtrl">
+                    <p>URL to share: <a href="{{url}}">{{url}}</a></p>
+                </div>
+            </section> -->
+
+            <section ng-app='fbApp'>
+
+                <button class='btn' ng-click="Facebook.login()">Connect with Facebook</button>
+
+
+                <div ng-show="Facebook.getAuth()">
+                    <h4>Access Token:</h4>
+                    <p ng-bind="Facebook.getAuth().accessToken"></p>
+                    <button class='btn btn-small' ng-click="Facebook.logout()">Logout</button>
+                </div>
+
+                <div id='fb-root'></div>
+
+            </section>
+
             <hr />
       		<footer>
         		<p>&copy; M & S Worldwide 2012</p>
