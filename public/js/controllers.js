@@ -3,6 +3,22 @@
 // Initial URL to share.  
 // But really do we need a directive??
 
+// var app = angular.module('fbApp', []);
+
+/*
+ * Get the user's name from Facebook
+ */
+
+/*
+ function FbNameCtrl($scope, Facebook) {
+
+    FB.api('/me', function(response) {
+        $scope.name = response.name;
+        console.log('FbNameCtrl welcomes ' + name);
+    });
+}
+*/
+
 /*
 function ShareCtrl($scope, $location, Share) {
 	//$scope.url = location + "?shareID=1234";

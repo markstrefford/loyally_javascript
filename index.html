@@ -87,7 +87,14 @@ have to do, so that I trick the browser in to doing what I want.
                 <div ng-show="Facebook.getAuth()">
                     <h4>Access Token:</h4>
                     <p ng-bind="Facebook.getAuth().accessToken"></p>
+                    <p ng-bind="Facebook.getName().name"></p>
                     <button class='btn btn-small' ng-click="Facebook.logout()">Logout</button>
+                </div>
+
+                <div ng-controller="FbNameCtrl">
+                    <p>
+                        {{name}}
+                    </p>
                 </div>
 
                 <div id='fb-root'></div>

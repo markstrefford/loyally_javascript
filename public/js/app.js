@@ -7,18 +7,34 @@
 /* angular.module('share', ['shareServices', 'ngCookies']); */
 
 
-/* From http://jsfiddle.net/ggmRQ/9/ */
+/*
+ * Code based on https://groups.google.com/forum/#!msg/angular/bxojrdHLQfk/9W-iieow5WUJ and
+ * http://jsfiddle.net/ggmRQ/9/
+ */
 
 var app = angular.module('fbApp', []);
+
+
+function FbNameCtrl($scope, Facebook) {
+    // $scope.name = "Mark";
+    $scope.name = Facebook.name;
+
+};
+
 
 app.run(function($rootScope, Facebook) {
     $rootScope.Facebook = Facebook;
 })
 
+
+
 app.factory('Facebook', function() {
 
     var self = this;
     this.auth = null;
+
+    // my additions...
+    this.name = null;
 
     return {
 
@@ -46,9 +62,19 @@ app.factory('Facebook', function() {
                 } else {
                     console.log('Facebook logout failed.', response);
                 }
-
             })
+        },
 
+        // Get name of user
+        getName: function() {
+            console.log("getName() called...")
+            FB.api('/me', function(response) {
+                self.name = response.name;
+                self.id = response.id;
+
+                console.log('getName Facebook.name welcomes ' + self.name);
+                console.log('getName Facebook.Id is ' + self.id);
+            });
         }
 
     }
