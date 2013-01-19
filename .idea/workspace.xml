@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="198f079e-2643-4401-aee0-cb92209d1999" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/app.js" afterPath="$PROJECT_DIR$/public/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/controllers.js" afterPath="$PROJECT_DIR$/public/js/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/services.js" afterPath="$PROJECT_DIR$/public/js/services.js" />
     </list>
     <ignored path="loyally_javascript.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,52 +21,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="95" column="32" selection-start="4251" selection-end="4251" vertical-scroll-proportion="-16.25">
-              <folding>
-                <element signature="tag#head#0;tag#html#0" expanded="false" />
-                <element signature="tag#div#0;tag#body#0;tag#html#0" expanded="false" />
-                <element signature="tag#p#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-                <element signature="tag#p#1;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-                <element signature="e#3467#3665#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/js/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="29" selection-start="669" selection-end="669" vertical-scroll-proportion="0.72551394">
-              <folding>
-                <element signature="e#1049#1302#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="services.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/services.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="3" selection-start="3" selection-end="3" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/controllers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="2" selection-start="355" selection-end="355" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -94,10 +45,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="14" />
-    <option name="y" value="30" />
-    <option name="width" value="1418" />
-    <option name="height" value="975" />
+    <option name="x" value="101" />
+    <option name="y" value="22" />
+    <option name="width" value="1088" />
+    <option name="height" value="983" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -157,24 +108,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="loyally_javascript" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="loyally_javascript" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -193,15 +126,16 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="205" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="215" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1005" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1008" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1005" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="210" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="207" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="options.searchVisible" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
@@ -242,13 +176,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="14" y="30" width="1418" height="975" extended-state="0" />
+    <frame x="101" y="22" width="1088" height="983" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24984913" sideWeight="0.21922626" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16200717" sideWeight="0.99882907" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16150235" sideWeight="0.99882907" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24984913" sideWeight="0.21922626" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -320,14 +254,38 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="0" selection-start="3800" selection-end="3800" vertical-scroll-proportion="0.0">
+        <state line="95" column="32" selection-start="4251" selection-end="4251" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="29" selection-start="669" selection-end="669" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="tag#head#0;tag#html#0" expanded="false" />
-            <element signature="tag#div#0;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#p#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#p#1;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="e#3467#3665#0" expanded="false" />
+            <element signature="e#1049#1302#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/services.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="3" selection-start="3" selection-end="3" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="2" selection-start="355" selection-end="355" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="0" selection-start="3800" selection-end="3800" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -380,12 +338,22 @@
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="78" column="39" selection-start="3677" selection-end="3677" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="32" selection-start="4251" selection-end="4251" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="29" selection-start="669" selection-end="669" vertical-scroll-proportion="0.017964073">
           <folding>
-            <element signature="tag#head#0;tag#html#0" expanded="false" />
-            <element signature="tag#div#0;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#p#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#p#1;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="e#3467#3665#0" expanded="false" />
+            <element signature="e#1049#1302#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -399,30 +367,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="2" selection-start="355" selection-end="355" vertical-scroll-proportion="0.0">
+        <state line="19" column="2" selection-start="355" selection-end="355" vertical-scroll-proportion="0.34131736">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="32" selection-start="4251" selection-end="4251" vertical-scroll-proportion="-16.25">
-          <folding>
-            <element signature="tag#head#0;tag#html#0" expanded="false" />
-            <element signature="tag#div#0;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#p#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#p#1;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="e#3467#3665#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="29" selection-start="669" selection-end="669" vertical-scroll-proportion="0.72551394">
-          <folding>
-            <element signature="e#1049#1302#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
