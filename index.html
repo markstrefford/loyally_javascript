@@ -1,5 +1,6 @@
 <!doctype html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
     <head>
 	    <meta charset="utf-8">
         <title>MyBlog.com - The page for sharing</title>
@@ -29,12 +30,10 @@
       	<script src="public/js/angularjs/angular-resource.js" type="text/javascript"></script>
         <script src="public/js/angularjs/angular-cookies.js" type="text/javascript"></script>
 
-      	<!-- Todo - This will move to be hosted on loyally eventually! -->
-     	<script src="public/js/app.js" type="text/javascript"></script>
-      	<script src="public/js/controllers.js" type="text/javascript"></script>
-      	<script src="public/js/services.js" type="text/javascript"></script>
+        <script src='http://connect.facebook.net/en_US/all.js'></script>
     </head>
-    <body>	
+    <body>
+        <div id='fb-root'></div>
     	<div class="navbar navbar-fixed-top">
     		<div class="navbar-inner">
     	    	<div class="container">
@@ -58,7 +57,7 @@
 		</div>   <!-- navbar inner -->
 	</div>   <!-- navbar -->
 	<div class="container" >
-       		<h2>What Is Angular?</h2>
+       		<h3>What Is Angular?</h3>
        		<p>
 AngularJS is a structural framework for dynamic web apps. 
 It lets you use HTML as your template language and lets you extend HTML's syntax to 
@@ -73,33 +72,86 @@ creating applications, and as a result building web applications is an exercise 
 have to do, so that I trick the browser in to doing what I want.
             </p>
 
-            <!-- <section ng-app="share">
-                <div ng-controller="ShareCtrl">
-                    <p>URL to share: <a href="{{url}}">{{url}}</a></p>
-                </div>
-            </section> -->
+            <!-- From https://developers.facebook.com/docs/reference/dialogs/feed/ -->
 
-            <section ng-app='fbApp'>
+        <p><a onclick='postToFeed(); return false;'>Post to Feed</a></p>
+        <p id='msg'></p>
 
-                <button class='btn' ng-click="Facebook.login()">Connect with Facebook</button>
+        <script>
+            FB.init({appId: "518644834829463", status: true, cookie: true});
+
+            function postToFeed() {
+
+                // Get the ShareID from loyally.com
+                // Based on http://www.w3schools.com/ajax/tryit.asp?filename=tryajax_first
+                console.log("Start of postToFeed()");
+                var shareID;
+                var xmlhttp;
+                // TODO - Add in the IE variant!!
 
 
-                <div ng-show="Facebook.getAuth()">
-                    <h4>Access Token:</h4>
-                    <p ng-bind="Facebook.getAuth().accessToken"></p>
-                    <p ng-bind="Facebook.getName().name"></p>
-                    <button class='btn btn-small' ng-click="Facebook.logout()">Logout</button>
-                </div>
+                if (window.XMLHttpRequest)
+                {// code for IE7+, Firefox, Chrome, Opera, Safari
+                    console.log("Setting up XMLHttpRequest()")
+                    xmlhttp=new XMLHttpRequest();
+                }
+                // Removed code for IE5/6
+                console.log("About to call xmlhttp.onreadystatechange()")
+                xmlhttp.onreadystatechange=function()
+                {
+                    console.log("Now checking for xmlhttp.readyState==4 and xmlhttp.status=200");
+                    //console.log("readystate = " + xmlhttp.readyState + " and status = " + xmlhttp.status);
+                    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        console.log("readystate=4 and status=200!!")
+                        shareID=xmlhttp.responseText;
+                        var obj = {
+                            method: 'feed',
+                            redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
+                            link: 'http://loyally.local/~markstrefford/myblog.com/index.html?shareID=' + shareID,
+                            picture: 'http://fbrell.com/f8.jpg',
+                            name: 'AngularJS',
+                            caption: 'What is angular JS',
+                            description: 'Lets see if we can post from JS to FB with some loyally thrown in for good measure!'
+                        };
 
-                <div ng-controller="FbNameCtrl">
-                    <p>
-                        {{name}}
-                    </p>
-                </div>
+                        function callback(response) {
+                            document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+                        }
 
-                <div id='fb-root'></div>
+                        FB.ui(obj, callback);
+                    }
+                }
 
-            </section>
+                //xmlhttp.open("GET","/~markstrefford/myblog.com/api/v01/share/share.json",true);
+                //xmlhttp.send();
+
+                xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
+                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                xmlhttp.send(JSON.stringify({"url" : "http://myblog.com/2",
+                                            "facebook_id" : "711041406",
+                                            "scheme" : "111"}));
+
+                /* calling the API ...
+                var obj = {
+                    method: 'feed',
+                    redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
+                    link: 'http://loyally.local/~markstrefford/myblog.com/index.html?shareID=' + shareID,
+                    picture: 'http://fbrell.com/f8.jpg',
+                    name: 'AngularJS',
+                    caption: 'What is angular JS',
+                    description: 'Lets see if we can post from JS to FB with some loyally thrown in for good measure!'
+                };
+
+                function callback(response) {
+                    document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+                }
+
+                FB.ui(obj, callback);
+                */
+            }
+
+        </script>
 
             <hr />
       		<footer>
