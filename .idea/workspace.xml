@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="198f079e-2643-4401-aee0-cb92209d1999" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/v01/share/share.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/thankyou.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/xml.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="loyally_javascript.iws" />
@@ -29,7 +25,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="22" selection-start="4524" selection-end="4524" vertical-scroll-proportion="0.39849624">
+            <state line="108" column="105" selection-start="5076" selection-end="5076" vertical-scroll-proportion="0.2669173">
               <folding />
             </state>
           </provider>
@@ -414,7 +410,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="22" selection-start="4524" selection-end="4524" vertical-scroll-proportion="0.39849624">
+        <state line="108" column="105" selection-start="5076" selection-end="5076" vertical-scroll-proportion="0.2669173">
           <folding />
         </state>
       </provider>

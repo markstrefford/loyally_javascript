@@ -73,6 +73,7 @@ have to do, so that I trick the browser in to doing what I want.
             </p>
 
             <!-- From https://developers.facebook.com/docs/reference/dialogs/feed/ -->
+            <!-- TODO - Add in login functionality from https://developers.facebook.com/docs/howtos/login/getting-started/ -->
 
         <p><a onclick='postToFeed(); return false;'>Post to Feed</a></p>
         <p id='msg'></p>
@@ -104,7 +105,12 @@ have to do, so that I trick the browser in to doing what I want.
                     if (xmlhttp.readyState==4 && xmlhttp.status==200)
                     {
                         console.log("readystate=4 and status=200!!")
-                        shareID=xmlhttp.responseText;
+                        // Get the shareID value from the Json response
+                        // See http://stackoverflow.com/questions/4935632/how-to-parse-json-in-javascript
+                        var jsonResponse=JSON.parse(xmlhttp.responseText),
+                                shareID = jsonResponse.shareID;
+                        console.log("Returned shareID from Json = " + shareID);
+                        //shareID=xmlhttp.responseText;
                         var obj = {
                             method: 'feed',
                             redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
