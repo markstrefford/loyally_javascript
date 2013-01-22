@@ -3,9 +3,9 @@
       xmlns:fb="https://www.facebook.com/2008/fbml">
     <head>
 	    <meta charset="utf-8">
-        <title>MyBlog.com - The page for sharing</title>
+        <title>Tennis for the over 40's</title>
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <meta name="description" content="	">
+	    <meta name="description" content="All about enjoying tennis if you're over 40!">
 	    <meta name="author" content="M&S Worldwide">
         <link rel="stylesheet" media="screen" href="public/css/main.css">
         <link rel="shortcut icon" type="image/png" href="public/img/favicon.png">
@@ -57,19 +57,17 @@
 		</div>   <!-- navbar inner -->
 	</div>   <!-- navbar -->
 	<div class="container" >
-       		<h3>What Is Angular?</h3>
+       		<h3>Tennis for the over 40's</h3>
        		<p>
-AngularJS is a structural framework for dynamic web apps. 
-It lets you use HTML as your template language and lets you extend HTML's syntax to 
-express your application's components clearly and succinctly. Out of the box, 
-it eliminates much of the code you currently write through data binding and dependency injection. 
-And it all happens in JavaScript within the browser making it an ideal partner with any server technology.
-			</p>
+                   The USTA offers age-group national championships on four different surfaces.
+                   The first table below presents the schedule of dates and locations of the 2012 national championships
+                   for age groups from 40 to 90. The second table summarizes the number of competitors, by gender and
+                   selected age groups, for the 2012 National Championships on each of the four surfaces.
 			<p>
-Angular is what HTML would have been had it been designed for applications. 
-HTML is a great declarative language for static documents. It does not contain much in the way of 
-creating applications, and as a result building web applications is an exercise in what do I 
-have to do, so that I trick the browser in to doing what I want.
+                    The next four tables present the national champions and the number of competitors for each of the four national
+                    championships in tennis. In 2012, two players won national championships on all four types of courts:
+                    Tina karwasky (W 60-64) and Brenda Carter (W 65-69).			</p>
+
             </p>
 
             <!-- From https://developers.facebook.com/docs/reference/dialogs/feed/ -->
@@ -117,9 +115,9 @@ have to do, so that I trick the browser in to doing what I want.
                             redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
                             link: 'http://loyally.local/~markstrefford/myblog.com/index.html?shareID=' + shareID,
                             picture: 'http://fbrell.com/f8.jpg',
-                            name: 'AngularJS',
-                            caption: 'What is angular JS',
-                            description: 'Lets see if we can post from JS to FB with some loyally thrown in for good measure!'
+                            name: 'Tennis over 40',
+                            caption: 'Playing tennis for the over 40s',
+                            description: 'Playing tennis is great, and really enjoyable if you are over 40!'
                         };
 
                         function callback(response) {
@@ -132,7 +130,7 @@ have to do, so that I trick the browser in to doing what I want.
 
                 xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
                 xmlhttp.setRequestHeader("Content-Type", "application/json");
-                xmlhttp.send(JSON.stringify({"url" : "http://myblog.com/2",
+                xmlhttp.send(JSON.stringify({"url" : "http://myblog.com/index.html",
                                             "facebook_id" : "711041406",
                                             "scheme" : "111"}));
             }
