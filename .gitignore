@@ -1,0 +1,10 @@
+# Extracted from http://stackoverflow.com/questions/11968531/what-to-gitignore-from-the-idea-folder
+# Ignore all dotfiles...
+.*
+# except for .gitignore
+!.gitignore
+
+*.iws
+.ideas/workspace.xml
+.ideas/tasks.xml
+
