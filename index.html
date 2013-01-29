@@ -73,11 +73,29 @@
             <!-- From https://developers.facebook.com/docs/reference/dialogs/feed/ -->
             <!-- TODO - Add in login functionality from https://developers.facebook.com/docs/howtos/login/getting-started/ -->
 
-        <p><a onclick='postToFeed(); return false;'>Post to Feed</a></p>
+        <p><a onclick='shareUrl(); return false;'>Share on Facebook</a></p>
         <p id='msg'></p>
 
         <script>
             FB.init({appId: "518644834829463", status: true, cookie: true});
+
+            function shareUrl() {
+                FB.login(function(response) {
+                  if (response.authResponse) {
+                        console.log('Welcome!  postToFeed() is fetching your information.... ');
+                        FB.api('/me', function(response) {
+                            console.log('Good to see you, ' + response.name + '.');
+                        });
+                        console.log('Now lets postToFeed()');
+                        postToFeed();
+                    } else {
+                        console.log('User cancelled login or did not fully authorize.');
+                        // TODO - What to do if not authorised???
+                    }
+                }, {scope: 'email,user_likes'});
+            }
+
+
 
             function postToFeed() {
 
@@ -85,7 +103,7 @@
 
                 // Based on http://www.w3schools.com/ajax/ajax_xmlhttprequest_onreadystatechange.asp
                 // and http://www.w3schools.com/ajax/tryit.asp?filename=tryajax_first
-                console.log("Start of postToFeed()");
+                console.log("Start of postToFeed2()");
 
                 var shareID;
                 var xmlhttp;
@@ -128,6 +146,7 @@
                     }
                 }
 
+                // TODO - Get this from Facebook API and add in name and email address.
                 xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
                 xmlhttp.setRequestHeader("Content-Type", "application/json");
                 xmlhttp.send(JSON.stringify({"url" : "http://myblog.com/index.html",
