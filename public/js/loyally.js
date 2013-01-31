@@ -23,7 +23,7 @@ postToFeed();
     console.log('User cancelled login or did not fully authorize.');
     // TODO - What to do if not authorised???
     }
-}, {scope: 'email,user_likes'});
+}, {scope: 'email'});
 }
 
 
@@ -49,7 +49,6 @@ console.log("About to call xmlhttp.onreadystatechange()")
 xmlhttp.onreadystatechange=function()
                 {
                     console.log("Now checking for xmlhttp.readyState==4 and xmlhttp.status=200");
-                    //console.log("readystate = " + xmlhttp.readyState + " and status = " + xmlhttp.status);
                     if (xmlhttp.readyState==4 && xmlhttp.status==200)
                     {
                     console.log("readystate=4 and status=200!!")
@@ -82,7 +81,7 @@ xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
 xmlhttp.setRequestHeader("Content-Type", "application/json");
 xmlhttp.send(JSON.stringify({"url" : "http://myblog.com/index.html",
     "facebook_id" : "711041406",
-    "scheme" : "111"}));
+    "scheme" : lyId}));
 }
 
 // When a page of this site loads, we want to see if there is a ?shareID=nnnnn value and post this back to loyally
