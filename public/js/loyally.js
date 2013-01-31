@@ -37,6 +37,7 @@ function postToFeed() {
     console.log("Start of postToFeed2()");
 
     var shareID;
+    var clickUrl;
     var xmlhttp;
     if (window.XMLHttpRequest)
     {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -55,13 +56,14 @@ xmlhttp.onreadystatechange=function()
                     // Get the shareID value from the Json response
                     // See http://stackoverflow.com/questions/4935632/how-to-parse-json-in-javascript
                     var jsonResponse=JSON.parse(xmlhttp.responseText),
-                    shareID = jsonResponse.shareID;
-                    console.log("Returned shareID from Json = " + shareID);
+                    //shareID = jsonResponse.shareID;
+                    clickUrl = jsonResponse.clickUrl;
+                    console.log("Returned URL from Json = " + clickUrl);
                     //shareID=xmlhttp.responseText;
                     var obj = {
                     method: 'feed',
                     redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
-                    link: 'http://loyally.local/~markstrefford/myblog.com/index.html?shareID=' + shareID,
+                    link: clickUrl,
                     picture: 'http://fbrell.com/f8.jpg',
                     name: 'Tennis over 40',
                     caption: 'Playing tennis for the over 40s',
