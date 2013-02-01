@@ -63,9 +63,9 @@ function postToFeed() {
         if (response.authResponse) {
             console.log('Welcome!  JsonCall() is fetching your information.... ');
             FB.api('/me', function(response) {
-                fbId = response.id; console.log("login/FB.id:"+fbId);
-                fbName = response.name; console.log("login/FB.name:"+fbName);
-                fbEmail = response.email; console.log("login/FB.email:"+fbEmail);
+                fbId = response.id;         //console.log("login/FB.id:"+fbId);
+                fbName = response.name;     //console.log("login/FB.name:"+fbName);
+                fbEmail = response.email;   //console.log("login/FB.email:"+fbEmail);
                 xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
                 xmlhttp.setRequestHeader("Content-Type", "application/json");
                 var jsonRequest=JSON.stringify({"url" : window.location.href,
