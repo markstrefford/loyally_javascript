@@ -6,26 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-
-
-FB.init({appId: "518644834829463", status: true, cookie: true});
-
-function shareUrl() {
-    FB.login(function(response) {
-        if (response.authResponse) {
-            console.log('Welcome!  postToFeed() is fetching your information.... ');
-            FB.api('/me', function(response) {
-                console.log('Good to see you, ' + response.name + '.');
-            });
-console.log('Now lets postToFeed()');
-postToFeed();
-} else {
-    console.log('User cancelled login or did not fully authorize.');
-    // TODO - What to do if not authorised???
-    }
-}, {scope: 'email'});
-}
-
+//FB.init({appId: "518644834829463", status: true, cookie: true});
+//FB.init({appId: lyFbId, status: true, cookie: true});
 
 
 function postToFeed() {
@@ -34,56 +16,72 @@ function postToFeed() {
 
     // Based on http://www.w3schools.com/ajax/ajax_xmlhttprequest_onreadystatechange.asp
     // and http://www.w3schools.com/ajax/tryit.asp?filename=tryajax_first
-    console.log("Start of postToFeed2()");
 
-    var shareID;
-    var clickUrl;
     var xmlhttp;
     if (window.XMLHttpRequest)
     {// code for IE7+, Firefox, Chrome, Opera, Safari
-    console.log("Setting up XMLHttpRequest()")
-    xmlhttp=new XMLHttpRequest();
+        console.log("Setting up XMLHttpRequest()")
+        xmlhttp=new XMLHttpRequest();
     }
+    // Removed code for IE5/6
 
-// Removed code for IE5/6
-console.log("About to call xmlhttp.onreadystatechange()")
-xmlhttp.onreadystatechange=function()
-                {
-                    console.log("Now checking for xmlhttp.readyState==4 and xmlhttp.status=200");
-                    if (xmlhttp.readyState==4 && xmlhttp.status==200)
-                    {
-                    console.log("readystate=4 and status=200!!")
-                    // Get the shareID value from the Json response
-                    // See http://stackoverflow.com/questions/4935632/how-to-parse-json-in-javascript
-                    var jsonResponse=JSON.parse(xmlhttp.responseText),
-                    //shareID = jsonResponse.shareID;
-                    clickUrl = jsonResponse.clickUrl;
+    xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                    var jsonResponse=JSON.parse(xmlhttp.responseText);
+                    var clickUrl = jsonResponse.clickUrl;
                     console.log("Returned URL from Json = " + clickUrl);
-                    //shareID=xmlhttp.responseText;
+                    var title = document.title;
+                    var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
+                    var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
+                    var image = document.getElementsByTagName('img')[0]; if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
                     var obj = {
-                    method: 'feed',
-                    redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
-                    link: clickUrl,
-                    picture: 'http://fbrell.com/f8.jpg',
-                    name: 'Tennis over 40',
-                    caption: 'Playing tennis for the over 40s',
-                    description: 'Playing tennis is great, and really enjoyable if you are over 40!'
+                            method: 'feed',
+                            //redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
+                            link: clickUrl,
+                            picture: image,
+                            name: title,
+                            caption: caption,
+                            description: description
                     };
 
-function callback(response) {
-    document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+                    function callback(response) {
+                        //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+                        // TODO - Provide a better message here??
+                        document.getElementById('msg').innerHTML = "Thank you for sharing!";
+                    }
+
+                    FB.ui(obj, callback);
+            }
     }
 
-FB.ui(obj, callback);
-}
-}
 
-// TODO - Get this from Facebook API and add in name and email address.
-xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
-xmlhttp.setRequestHeader("Content-Type", "application/json");
-xmlhttp.send(JSON.stringify({"url" : "http://myblog.com/index.html",
-    "facebook_id" : "711041406",
-    "scheme" : lyId}));
+    // Setup some default values
+    var fbId=0;
+    var fbName="NOT_AUTHORISED";
+    var fbEmail="NOT_AUTHORISED";
+    FB.login(function(response) {
+        if (response.authResponse) {
+            console.log('Welcome!  JsonCall() is fetching your information.... ');
+            FB.api('/me', function(response) {
+                fbId = response.id; console.log("login/FB.id:"+fbId);
+                fbName = response.name; console.log("login/FB.name:"+fbName);
+                fbEmail = response.email; console.log("login/FB.email:"+fbEmail);
+                xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
+                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                var jsonRequest=JSON.stringify({"url" : window.location.href,
+                            "facebook_id" : fbId,
+                            "facebook_name" : fbName,
+                            "facebook_email" : fbEmail,
+                            "scheme" : lyId});
+                xmlhttp.send(jsonRequest);
+            });
+            console.log('Now lets call loyally()');
+        } else {
+            console.log('User cancelled login or did not fully authorize.');
+            // TODO - What to do if not authorised???
+            // TODO - Alert box perhaps?  "You need to log in to share on Facebook" ??
+        }
+    }, {scope: 'email'});
 }
 
 // When a page of this site loads, we want to see if there is a ?shareID=nnnnn value and post this back to loyally

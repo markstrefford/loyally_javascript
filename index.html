@@ -38,6 +38,7 @@
             var lyFbId="518644834829463";    // Facebook ID for this app
             var lyId="111";                 // Loyally scheme
             var lyDmn="http://myblog.com";  // Domain to track
+            FB.init({appId: lyFbId, status: true, cookie: true});
             <!-- var ly = document.createElement('script'); ly.type = "text/javascript"; ly.src = "./public/js/loyally.js"; -->
         </script>
         <!-- End of loyally code -->
@@ -90,7 +91,9 @@
 
             <!-- From https://developers.facebook.com/docs/reference/dialogs/feed/ -->
             <!-- TODO - Add in login functionality from https://developers.facebook.com/docs/howtos/login/getting-started/ -->
-        <p><a class="btn btn-primary btn-large" onclick='shareUrl(); return false;'>Share on Facebook</a></p>
+        <!-- <p><a class="btn btn-primary btn-large" onclick='shareUrl(); return false;'>Share on Facebook</a></p> -->
+        <p><a class="btn btn-primary btn-large" onclick='postToFeed(); return false;'>Share on Facebook</a></p>
+
         <p id='msg'></p>
 
 
