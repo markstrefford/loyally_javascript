@@ -8,7 +8,7 @@
 
 //FB.init({appId: "518644834829463", status: true, cookie: true});
 //FB.init({appId: lyFbId, status: true, cookie: true});
-
+FB.init({appId: "518644834829463", status: true, cookie: true});
 
 function postToFeed() {
 
