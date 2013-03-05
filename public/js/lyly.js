@@ -4,12 +4,15 @@
  * Date: 30/01/2013
  * Time: 20:19
  * To change this template use File | Settings | File Templates.
+ *
+ * This version is called server side
  */
 
 // Only call FB.init if its needed later on...
-//if (lyFbA == 1) {FB.init({appId: "518644834829463", status: true, cookie: true})};
+FB.init({appId: "518644834829463", status: true, cookie: true});
 
 function postToFeed() {
+    //if (lyFbA == 1) {FB.init({appId: "518644834829463", status: true, cookie: true})};
 
     /*
         Get the ShareID from loyally.com
@@ -30,22 +33,14 @@ function postToFeed() {
                     console.log(jsonResponse);
                     var clickUrl = jsonResponse.url;
                     console.log("Returned URL from Json = " + clickUrl);
-                    var title = document.title;
-                    var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
-                    var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
-                    var image = document.getElementsByTagName('img')[0]; if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
+                    //var title = document.title;
+                    var caption = title;
+                    if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
+                    if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
                     /*
                         Handle post to Facebook feed
                      */
-                    if (lyFbA == 0) {
-                        // Use share.php
-                        //var fbShareUrl="https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(clickUrl) + "&t=" + encodeURIComponent(title);
-                        var fbShareUrl="http://loyally.local:9000/register_fb_url_share/" + encodeURIComponent(clickUrl) + "/" + encodeURIComponent(title);
-                        console.log(fbShareUrl);
-                        window.location.assign(fbShareUrl);
-                        //window.open(fbShareUrl,"_blank");
 
-                    } else {
                         // Use FB API (only works if FB appId is configured for this domain
                         var obj = {
                             method: 'feed',
@@ -63,7 +58,7 @@ function postToFeed() {
                             document.getElementById('msg').innerHTML = "Thank you for sharing!";
                         }
                         FB.ui(obj, callback);
-                    };
+
             }
     }
 
@@ -75,7 +70,6 @@ function postToFeed() {
     var fbId=0;
     var fbName="NOT_AUTHORISED";
     var fbEmail="NOT_AUTHORISED";
-    if (lyFbA == 1) {
         FB.login(function(response) {
             if (response.authResponse) {
                 console.log('Welcome!  JsonCall() is fetching your information.... ');
@@ -85,7 +79,7 @@ function postToFeed() {
                    fbEmail = response.email;   //console.log("login/FB.email:"+fbEmail);
                     xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
                     xmlhttp.setRequestHeader("Content-Type", "application/json");
-                    var jsonRequest=JSON.stringify({"url" : window.location.href,
+                    var jsonRequest=JSON.stringify({"url" : url,
                             "facebook_id" : fbId,
                             "facebook_name" : fbName,
                             "facebook_email" : fbEmail,
@@ -99,17 +93,7 @@ function postToFeed() {
                 // TODO - Alert box perhaps?  "You need to log in to share on Facebook" ??
             }
         }, {scope: 'email'});
-    } else {
-        console.log('Now lets call loyally()');
-        xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
-        xmlhttp.setRequestHeader("Content-Type", "application/json");
-        var jsonRequest=JSON.stringify({"url" : window.location.href,
-            "facebook_id" : "99999999",
-            "facebook_name" : "ANONYMOUS",
-            "facebook_email" : "ANONYMOUS",
-            "scheme" : lyId});
-        xmlhttp.send(jsonRequest);
-    }
+
 }
 
 /*
@@ -129,60 +113,6 @@ $(document).ready ( function() {
     console.log("Page loaded - Checking if this is some loyally activity!!");
     var url = window.location.href;
     console.log("Current page URL is " + url);
-
-    // From https://developer.mozilla.org/en-US/docs/DOM/window.location#Location%5Fobject
-    //var oGetVars = {};
-
-if (window.location.search.length > 1) {
-    // Probably use this later to keep all other search values in URL
-    //for (var aItKey, nKeyId = 0, aCouples = window.location.search.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
-    //    aItKey = aCouples[nKeyId].split("=");
-    //    oGetVars[unescape(aItKey[0])] = aItKey.length > 1 ? unescape(aItKey[1]) : "";
-    //}
-var shareID = loadPageVar("shareID");
-console.log("Found shareID : " + shareID);
-} else {
-    console.log("No shareID specified on this page");
-    }
-
-//console.log("Found shareID : " + oGetVars.shareID);
-
-// Now remove shareID from URL and redirect just to main URL
-// http://www.w3schools.com/js/js_window_location.asp
-// TODO - This currently removes all parameters after the "?" so needs to work better!!!
-if (shareID != null) {
-    var locationend = url.indexOf('?');
-    var new_url = url.substr(0, locationend);
-
-    // Fire off the loyally webservice call here!!!
-    var xmlhttpget;
-    if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari
-    console.log("Activity: Setting up XMLHttpRequest()")
-    xmlhttpget=new XMLHttpRequest();
-    }
-
-// Removed code for IE5/6
-console.log("About to call xmlhttp.onreadystatechange() for Activity")
-xmlhttpget.onreadystatechange=function() {
-    console.log("Now checking for xmlhttp.readyState==4 and xmlhttp.status=200");
-
-    if (xmlhttpget.readyState==4 && xmlhttpget.status==200) {
-    console.log("readystate=4 and status=200!!");
-    console.log("So activity recorded!!");
-    }
-}
-
-console.log("About to do a GET to http://loyally.local:9000/api/v01/share/activity/" + shareID);
-xmlhttpget.open("GET", "http://loyally.local:9000/api/v01/share/activity/" + shareID, true);
-xmlhttpget.send();
-console.log("Done our GET to http://loyally.local:9000/api/v01/share/activity/" + shareID);
-
-
-console.log("Activity: Redirecting to " + new_url);
-window.location.assign(new_url);
-
-}
-
+    postToFeed();
 })
 

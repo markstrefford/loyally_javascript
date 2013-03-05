@@ -36,12 +36,17 @@
         <script type="text/javascript" src="public/js/loyally.js"></script>
         <script type="text/javascript">
             var lyId="111";                 // Loyally scheme
+            var lyMd="1";                   // Use redirect URL (1) or parameter on existing URL (0)
+            var lyFbA="0";                  // Use FP API (1) or share.php (0)
             var lyDmn="http://myblog.com";  // Domain to track
             <!-- var ly = document.createElement('script'); ly.type = "text/javascript"; ly.src = "./public/js/loyally.js"; -->
         </script>
         <!-- End of loyally code -->
 
 
+        <script type="text/javascript">var switchTo5x=false;</script>
+        <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+        <script type="text/javascript">stLight.options({publisher: "08cf87aa-2f77-4bdf-b0f0-a14c81a3a41f", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
     </head>
     <body>
 
@@ -87,6 +92,8 @@
 
             </p>
 
+        <h3>Share using original loyally.js...</h3>
+        <p>Failing due to issues with localhost not a subdomain of loyally!!</p>
             <!-- From https://developers.facebook.com/docs/reference/dialogs/feed/ -->
             <!-- TODO - Add in login functionality from https://developers.facebook.com/docs/howtos/login/getting-started/ -->
         <!-- <p><a class="btn btn-primary btn-large" onclick='shareUrl(); return false;'>Share on Facebook</a></p> -->
@@ -94,6 +101,17 @@
 
         <p id='msg'></p>
 
+
+        <h3>sharethis sharing...</h3>
+        <span class='st_sharethis_large' displayText='ShareThis'></span>
+        <span class='st_facebook_large' displayText='Facebook'></span>
+        <span class='st_twitter_large' displayText='Tweet'></span>
+        <span class='st_linkedin_large' displayText='LinkedIn'></span>
+        <span class='st_pinterest_large' displayText='Pinterest'></span>
+        <span class='st_email_large' displayText='Email'></span>
+
+        <h3>Shareig using just a link...</h3>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.eurostar.com&t=Travel+to+Europe">Share using share.php</a>
 
             <hr />
       		<footer>
