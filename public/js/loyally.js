@@ -3,13 +3,32 @@
  * User: markstrefford
  * Date: 30/01/2013
  * Time: 20:19
- * To change this template use File | Settings | File Templates.
+ *
+ * ----------------------------------------------------
+ *
+ * This JS provides the following client side functionality:
+ *
+ * - When the share button is clicked, call _lShare function
+ * - Get relevant page data and call Loyally to get unique Share URL
+ * - If lyFbA = 0 then redirect to Loyally to do Facebook sharing
+ * - If lyFbA = 1 then share directly with Facebook (Note this requires an appId registered to this domain)
+ *
+ * - When page loads, check to see if it has a shareID appended to the URL. If so, remove it and inform loyally of a click
+ *
+ * Expects the following variables to be set in the calling web page:
+ *
+ * lyId - Scheme ID at loyally.me  (TODO - Replace this with scheme key)
+ * lyMd - Create redirect URL (so clicking on shared link goes via Loyally.me) or appends shareID to the URL (Not used??)
+ * lyFbA - Use Facebook API from here (1) , or callback to loyally.me (0) to make the Facebook API calls
+ * lyDmn - Domain as registered with Loyally.me
+ *
  */
 
-// Only call FB.init if its needed later on...
-//if (lyFbA == 1) {FB.init({appId: "518644834829463", status: true, cookie: true})};
 
-function postToFeed() {
+// Client side loyally javascript
+
+
+function _lShare() {
 
     /*
         Get the ShareID from loyally.com
@@ -18,60 +37,82 @@ function postToFeed() {
     // Based on http://www.w3schools.com/ajax/ajax_xmlhttprequest_onreadystatechange.asp
     // and http://www.w3schools.com/ajax/tryit.asp?filename=tryajax_first
 
-    var xmlhttp;
-    if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari
-        console.log("Setting up XMLHttpRequest()")
-        xmlhttp=new XMLHttpRequest();
-    }
-    xmlhttp.onreadystatechange=function() {
+
+    if (lyFbA == 1) {
+
+        FB.init({appId: "518644834829463", status: true, cookie: true});
+
+        console.log("I'm here as we're calling FB directly!!");
+        // Post to FB directly, so get shareURL from loyally first
+        var xmlhttp;
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+            console.log("Setting up XMLHttpRequest()")
+            xmlhttp=new XMLHttpRequest();
+        }
+
+        xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                    var jsonResponse=JSON.parse(xmlhttp.responseText);
-                    console.log(jsonResponse);
-                    var clickUrl = jsonResponse.url;
-                    console.log("Returned URL from Json = " + clickUrl);
-                    var title = document.title;
-                    var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
-                    var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
-                    var image = document.getElementsByTagName('img')[0]; if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
-                    /*
-                        Handle post to Facebook feed
-                     */
-                    if (lyFbA == 0) {
-                        // Use share.php
-                        //var fbShareUrl="https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(clickUrl) + "&t=" + encodeURIComponent(title);
-                        var fbShareUrl="http://loyally.local:9000/register_fb_url_share/" + encodeURIComponent(clickUrl) + "/" + encodeURIComponent(title);
-                        console.log(fbShareUrl);
-                        window.location.assign(fbShareUrl);
-                        //window.open(fbShareUrl,"_blank");
+                var jsonResponse=JSON.parse(xmlhttp.responseText);
+                console.log(jsonResponse);
+                var clickUrl = jsonResponse.url;
+                console.log("Returned URL from Json = " + clickUrl);
 
-                    } else {
-                        // Use FB API (only works if FB appId is configured for this domain
-                        var obj = {
-                            method: 'feed',
-                            //redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
-                            link: clickUrl,
-                            picture: image,
-                            name: title,
-                            caption: caption,
-                            description: description
+                var title = document.title; if ( title == null ) { title = "Sharing this page with you..."}
+                var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
+                var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
+                var image = document.getElementsByTagName('img')[0]; if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
 
-                        }
-                        function callback(response) {
-                            //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
-                            // TODO - Provide a better message here??
-                            document.getElementById('msg').innerHTML = "Thank you for sharing!";
-                        }
-                        FB.ui(obj, callback);
-                    };
-            }
+                console.log("Sharing " + title);
+
+
+                // Use FB API (only works if FB appId is configured for this domain
+                var obj = {
+                    method: 'feed',
+                    //redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
+                    link: clickUrl,
+                    picture: image,
+                    name: title,
+                    caption: caption,
+                    description: description
+
+                }
+
+                function callback(response) {
+                    //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+                    // TODO - Provide a better message here??
+                    document.getElementById('msg').innerHTML = "Thank you for sharing!";
+                }
+                FB.ui(obj, callback);
+            };
+        }
+
+    } else {
+        console.log("I'm here as we're calling loyally directly!!");
+
+        // Use share.php
+        var url = window.location.href;
+        var title = document.title; if ( title == null ) { title = "Sharing this page with you..."}
+        var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
+        var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
+        var image = document.getElementsByTagName('img')[0]; if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
+
+        var fbShareUrl="http://loyally.local:9000/register_fb_url_share/" +
+            encodeURIComponent(lyId) + "/" +
+            encodeURIComponent(url) + "/" +
+            encodeURIComponent(title) + "/" +
+            encodeURIComponent(caption) + "/" +
+            encodeURIComponent(description) + "/" +
+            encodeURIComponent(image);
+        console.log(fbShareUrl);
+        window.location.assign(fbShareUrl);
     }
 
     /*
         Handle facebook login as required
      */
 
-    // Setup some default values
+    // Setup some default values - note these are only used if loyally.js is the one calling Facebook
     var fbId=0;
     var fbName="NOT_AUTHORISED";
     var fbEmail="NOT_AUTHORISED";
@@ -100,15 +141,19 @@ function postToFeed() {
             }
         }, {scope: 'email'});
     } else {
-        console.log('Now lets call loyally()');
-        xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
-        xmlhttp.setRequestHeader("Content-Type", "application/json");
-        var jsonRequest=JSON.stringify({"url" : window.location.href,
-            "facebook_id" : "99999999",
-            "facebook_name" : "ANONYMOUS",
-            "facebook_email" : "ANONYMOUS",
-            "scheme" : lyId});
-        xmlhttp.send(jsonRequest);
+        console.log("Not calling FB directly here, so need to get ready for redirect to loyally.me!");
+        console.log("Sharing " + title);
+
+
+    }
+
+    // Get details for this page
+    function getPageInfo() {
+        var url = window.location.href;
+        var title = document.title; if ( title == null ) { title = "Sharing this page with you..."}
+        var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
+        var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
+        var image = document.getElementsByTagName('img')[0]; if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
     }
 }
 

@@ -70,29 +70,32 @@ function postToFeed() {
     var fbId=0;
     var fbName="NOT_AUTHORISED";
     var fbEmail="NOT_AUTHORISED";
-        FB.login(function(response) {
-            if (response.authResponse) {
-                console.log('Welcome!  JsonCall() is fetching your information.... ');
-                FB.api('/me', function(response) {
-                   fbId = response.id;         //console.log("login/FB.id:"+fbId);
-                   fbName = response.name;     //console.log("login/FB.name:"+fbName);
-                   fbEmail = response.email;   //console.log("login/FB.email:"+fbEmail);
-                    xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
-                    xmlhttp.setRequestHeader("Content-Type", "application/json");
-                    var jsonRequest=JSON.stringify({"url" : url,
-                            "facebook_id" : fbId,
-                            "facebook_name" : fbName,
-                            "facebook_email" : fbEmail,
-                            "scheme" : lyId});
-                    xmlhttp.send(jsonRequest);
+    FB.login(function(response) {
+        if (response.authResponse) {
+            console.log('Welcome!  FB.api is fetching your information.... ');
+            FB.api('/me', function(response) {
+                fbId = response.id;         //console.log("login/FB.id:"+fbId);
+                fbName = response.name;     //console.log("login/FB.name:"+fbName);
+                fbEmail = response.email;   //console.log("login/FB.email:"+fbEmail);
+                xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
+                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                console.log('...and setting up ready to call loyally to get a shareURL... ');
+                var jsonRequest=JSON.stringify({
+                    "url" : url,
+                    "facebook_id" : fbId,
+                    "facebook_name" : fbName,
+                    "facebook_email" : fbEmail,
+                    "scheme" : lyId
                 });
-                console.log('Now lets call loyally()');
-            } else {
-                console.log('User cancelled login or did not fully authorize.');
-                // TODO - What to do if not authorised???
-                // TODO - Alert box perhaps?  "You need to log in to share on Facebook" ??
-            }
-        }, {scope: 'email'});
+                xmlhttp.send(jsonRequest);
+            });
+            console.log('Now lets call loyally()');
+        } else {
+            console.log('User cancelled login or did not fully authorize.');
+            // TODO - What to do if not authorised???
+            // TODO - Alert box perhaps?  "You need to log in to share on Facebook" ??
+        }
+    }, {scope: 'email'});
 
 }
 
@@ -110,9 +113,7 @@ function loadPageVar (sVar) {
     }
 
 $(document).ready ( function() {
-    console.log("Page loaded - Checking if this is some loyally activity!!");
-    var url = window.location.href;
-    console.log("Current page URL is " + url);
+    console.log("Page loaded - ready to post to Facebook!!");
     postToFeed();
 })
 
