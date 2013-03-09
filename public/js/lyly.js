@@ -11,7 +11,7 @@
 // Only call FB.init if its needed later on...
 FB.init({appId: "518644834829463", status: true, cookie: true});
 
-function postToFeed() {
+function postToFeed(url) {
     //if (lyFbA == 1) {FB.init({appId: "518644834829463", status: true, cookie: true})};
 
     /*
@@ -108,12 +108,8 @@ function postToFeed() {
 
 // From http://stackoverflow.com/questions/65434/getting-notified-when-the-page-dom-has-loaded-but-before-window-onload
 
-function loadPageVar (sVar) {
-    return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
-    }
-
 $(document).ready ( function() {
-    console.log("Page loaded - ready to post to Facebook!!");
-    postToFeed();
+    console.log("Page loaded - ready to post " + url + " to Facebook!!");
+    postToFeed(url);
 })
 

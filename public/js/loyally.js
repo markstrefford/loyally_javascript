@@ -171,7 +171,7 @@ function loadPageVar (sVar) {
     }
 
 $(document).ready ( function() {
-    console.log("Page loaded - Checking if this is some loyally activity!!");
+    console.log("Page loaded - Checking if this is some loyally activity for scheme " + lyId + "!!");
     var url = window.location.href;
     console.log("Current page URL is " + url);
 
