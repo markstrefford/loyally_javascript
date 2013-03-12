@@ -31,11 +31,11 @@ function postToFeed(url) {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                     var jsonResponse=JSON.parse(xmlhttp.responseText);
                     console.log(jsonResponse);
-                    var clickUrl = jsonResponse.url;
-                    console.log("Returned URL from Json = " + clickUrl);
+                    var token = jsonResponse.token;
+                    console.log("Returned URL from Json = " + _goUrl + token);
                     //var title = document.title;
                     var caption = title;
-                    if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
+                    // if ( description == null) { description = ""};
                     if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
                     /*
                         Handle post to Facebook feed
@@ -45,7 +45,7 @@ function postToFeed(url) {
                         var obj = {
                             method: 'feed',
                             //redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
-                            link: clickUrl,
+                            link: _goUrl + token,
                             picture: image,
                             name: title,
                             caption: caption,
@@ -55,7 +55,8 @@ function postToFeed(url) {
                         function callback(response) {
                             //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
                             // TODO - Provide a better message here??
-                            document.getElementById('msg').innerHTML = "Thank you for sharing!";
+                            //document.getElementById('msg').innerHTML = "Thank you for sharing!";
+                            // Redirect to thank you page!!!
                         }
                         FB.ui(obj, callback);
 

@@ -27,7 +27,6 @@
 
 // Client side loyally javascript
 
-
 function _lShare() {
 
     /*
@@ -55,8 +54,8 @@ function _lShare() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                 var jsonResponse=JSON.parse(xmlhttp.responseText);
                 console.log(jsonResponse);
-                var clickUrl = jsonResponse.url;
-                console.log("Returned URL from Json = " + clickUrl);
+                var token = jsonResponse.token;
+                console.log("Returned URL from Json : " + _goUrl + token);
 
                 var title = document.title; if ( title == null ) { title = "Sharing this page with you..."}
                 var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
@@ -70,7 +69,7 @@ function _lShare() {
                 var obj = {
                     method: 'feed',
                     //redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
-                    link: clickUrl,
+                    link: _goUrl + token,
                     picture: image,
                     name: title,
                     caption: caption,
@@ -99,6 +98,7 @@ function _lShare() {
 
         var fbShareUrl="http://loyally.local:9000/register_fb_url_share/" +
             encodeURIComponent(lyId) + "/" +
+            encodeURIComponent(lyDmn) + "/" +
             encodeURIComponent(url) + "/" +
             encodeURIComponent(title) + "/" +
             encodeURIComponent(caption) + "/" +
