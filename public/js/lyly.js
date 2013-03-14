@@ -12,6 +12,8 @@
 FB.init({appId: "518644834829463", status: true, cookie: true});
 
 function postToFeed(url) {
+    var _lyServer="http://beta.loyally.me";
+
     //if (lyFbA == 1) {FB.init({appId: "518644834829463", status: true, cookie: true})};
 
     /*
@@ -78,7 +80,7 @@ function postToFeed(url) {
                 fbId = response.id;         //console.log("login/FB.id:"+fbId);
                 fbName = response.name;     //console.log("login/FB.name:"+fbName);
                 fbEmail = response.email;   //console.log("login/FB.email:"+fbEmail);
-                xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
+                xmlhttp.open("POST", _lyServer + "/api/v01/share/register_url");
                 xmlhttp.setRequestHeader("Content-Type", "application/json");
                 console.log('...and setting up ready to call loyally to get a shareURL... ');
                 var jsonRequest=JSON.stringify({

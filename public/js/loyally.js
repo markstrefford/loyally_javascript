@@ -28,6 +28,7 @@
 // Client side loyally javascript
 
 function _lShare() {
+    var _lyServer="http://beta.loyally.me";
 
     /*
         Get the ShareID from loyally.com
@@ -96,7 +97,7 @@ function _lShare() {
         var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
         var image = document.getElementsByTagName('img')[0]; if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
 
-        var fbShareUrl="http://loyally.local:9000/register_fb_url_share/" +
+        var fbShareUrl=_lyServer + "/fb_url_share/" +
             encodeURIComponent(lyId) + "/" +
             encodeURIComponent(lyDmn) + "/" +
             encodeURIComponent(url) + "/" +
@@ -124,7 +125,7 @@ function _lShare() {
                    fbId = response.id;         //console.log("login/FB.id:"+fbId);
                    fbName = response.name;     //console.log("login/FB.name:"+fbName);
                    fbEmail = response.email;   //console.log("login/FB.email:"+fbEmail);
-                    xmlhttp.open("POST", "http://loyally.local:9000/api/v01/share/register_url");
+                    xmlhttp.open("POST", _lyServer + "/api/v01/share/register_url");
                     xmlhttp.setRequestHeader("Content-Type", "application/json");
                     var jsonRequest=JSON.stringify({"url" : window.location.href,
                             "facebook_id" : fbId,
@@ -218,10 +219,10 @@ xmlhttpget.onreadystatechange=function() {
     }
 }
 
-console.log("About to do a GET to http://loyally.local:9000/api/v01/share/activity/" + shareID);
-xmlhttpget.open("GET", "http://loyally.local:9000/api/v01/share/activity/" + shareID, true);
+console.log("About to do a GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
+xmlhttpget.open("GET", _lyServer + "/api/v01/share/activity/" + shareID, true);
 xmlhttpget.send();
-console.log("Done our GET to http://loyally.local:9000/api/v01/share/activity/" + shareID);
+console.log("Done our GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
 
 
 console.log("Activity: Redirecting to " + new_url);
