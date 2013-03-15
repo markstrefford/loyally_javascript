@@ -21,6 +21,7 @@
  * lyMd - Create redirect URL (so clicking on shared link goes via Loyally.me) or appends shareID to the URL (Not used??)
  * lyFbA - Use Facebook API from here (1) , or callback to loyally.me (0) to make the Facebook API calls
  * lyDmn - Domain as registered with Loyally.me
+ * _lyD - dev (1) or prod (0) mode (used for now until I can think of a better way!!)
  *
  */
 
@@ -28,7 +29,7 @@
 // Client side loyally javascript
 
 function _lShare() {
-    var _lyServer="http://beta.loyally.me";
+    if ( _lyD == 0 ) {var _lyServer="http://beta.loyally.me";} else {var _lyServer="http://loyally.local:9000";}
 
     /*
         Get the ShareID from loyally.com

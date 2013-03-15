@@ -5,20 +5,33 @@
  * Time: 20:19
  * To change this template use File | Settings | File Templates.
  *
- * This version is called server side
+ * This version is called server side (typically from a POST to /share_fb_url) and requires the following:
+ *
+ * lyMd - N/A (client side)
+ * lyFbA - N/A (client side)
+ * _goUrl - URL to redirecting to (typically locally.me/go/..... )
+ * schemeKey - UUID for the scheme
+ * domain - Domain related to the scheme key
+ *
+ * The following are to detail of the page to be published to Facebook
+ *
+ * title - Page title
+ * caption - Page caption
+ * image - Page image
+ * url - URL of page
+ * description - Description of page
+ *
  */
 
 // Only call FB.init if its needed later on...
 FB.init({appId: "518644834829463", status: true, cookie: true});
 
 function postToFeed(url) {
-    var _lyServer="http://beta.loyally.me";
+    // Get server name (helps work with prod or dev here!!)
+    var _lyServer = "http://" + window.location.hostname;
+    if ( window.location.hostname == "loyally.local" ) { _lyServer = _lyServer + ":9000" }
+    console.log(_lyServer);
 
-    //if (lyFbA == 1) {FB.init({appId: "518644834829463", status: true, cookie: true})};
-
-    /*
-        Get the ShareID from loyally.com
-      */
 
     // Based on http://www.w3schools.com/ajax/ajax_xmlhttprequest_onreadystatechange.asp
     // and http://www.w3schools.com/ajax/tryit.asp?filename=tryajax_first
@@ -59,6 +72,8 @@ function postToFeed(url) {
                             // TODO - Provide a better message here??
                             //document.getElementById('msg').innerHTML = "Thank you for sharing!";
                             // Redirect to thank you page!!!
+                            console.log("URL shared on FB: Redirecting back to " + url);
+                            window.location.assign(url);
                         }
                         FB.ui(obj, callback);
 
@@ -80,9 +95,11 @@ function postToFeed(url) {
                 fbId = response.id;         //console.log("login/FB.id:"+fbId);
                 fbName = response.name;     //console.log("login/FB.name:"+fbName);
                 fbEmail = response.email;   //console.log("login/FB.email:"+fbEmail);
-                xmlhttp.open("POST", _lyServer + "/api/v01/share/register_url");
+                //var postUrl = _lyServer + "/api/v01/share/register_url";
+                var postUrl = _lyServer + "/api/v01/share/register_url";
+                console.log("About to POST to " + postUrl);
+                xmlhttp.open("POST",postUrl);
                 xmlhttp.setRequestHeader("Content-Type", "application/json");
-                console.log('...and setting up ready to call loyally to get a shareURL... ');
                 var jsonRequest=JSON.stringify({
                     "url" : url,
                     "facebook_id" : fbId,
@@ -90,9 +107,9 @@ function postToFeed(url) {
                     "facebook_email" : fbEmail,
                     "scheme" : lyId
                 });
+                console.log('Now lets call loyally() with json ' + jsonRequest);
                 xmlhttp.send(jsonRequest);
             });
-            console.log('Now lets call loyally()');
         } else {
             console.log('User cancelled login or did not fully authorize.');
             // TODO - What to do if not authorised???
