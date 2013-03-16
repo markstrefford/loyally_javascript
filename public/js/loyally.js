@@ -96,8 +96,8 @@ function _lShare() {
         var title = document.title; if ( title == null ) { title = "Sharing this page with you..."}
         var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
         var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
-        var image = document.getElementsByTagName('img')[0]; if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
-
+        var image = document.getElementById('img'); if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
+        console.log("Image from site = " + image);
         var fbShareUrl=_lyServer + "/fb_url_share/" +
             encodeURIComponent(lyId) + "/" +
             encodeURIComponent(lyDmn) + "/" +
@@ -107,7 +107,7 @@ function _lShare() {
             encodeURIComponent(description) + "/" +
             encodeURIComponent(image);
         console.log(fbShareUrl);
-        window.location.assign(fbShareUrl);
+        //window.location.assign(fbShareUrl);
     }
 
     /*

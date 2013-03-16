@@ -51,7 +51,8 @@ function postToFeed(url) {
                     //var title = document.title;
                     var caption = title;
                     // if ( description == null) { description = ""};
-                    if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
+                    //if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
+                    console.log("Image URL = " + image);
                     /*
                         Handle post to Facebook feed
                      */
@@ -67,6 +68,7 @@ function postToFeed(url) {
                             description: description
 
                         }
+                        console.log(obj);
                         function callback(response) {
                             //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
                             // TODO - Provide a better message here??
