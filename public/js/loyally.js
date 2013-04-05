@@ -107,7 +107,7 @@ function _lShare() {
             encodeURIComponent(description) + "/" +
             encodeURIComponent(image);
         console.log(fbShareUrl);
-        //window.location.assign(fbShareUrl);
+        window.location.assign(fbShareUrl);
     }
 
     /*
