@@ -52,6 +52,7 @@ function postToFeed(url) {
                     var caption = title;
                     // if ( description == null) { description = ""};
                     //if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
+                    image="http://beta.loyally.me/assets/img/loyally.jpg";
                     console.log("Image URL = " + image);
                     /*
                         Handle post to Facebook feed
