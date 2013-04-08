@@ -5,28 +5,17 @@
  * Time: 20:19
  * To change this template use File | Settings | File Templates.
  *
- * This version is called server side (typically from a POST to /share_fb_url) and requires the following:
+ * This version is called server side (after a successful dialog post to FB and is called from /share_fb_url).
+ * It requires the following:
  *
- * lyMd - N/A (client side)
- * lyFbA - N/A (client side)
- * _goUrl - URL to redirecting to (typically locally.me/go/..... )
- * schemeKey - UUID for the scheme
- * domain - Domain related to the scheme key
- *
- * The following are to detail of the page to be published to Facebook
- *
- * title - Page title
- * caption - Page caption
- * image - Page image
- * url - URL of page
- * description - Description of page
+ * _lyToken - token from shared URL
  *
  */
 
 // Only call FB.init if its needed later on...
 FB.init({appId: "518644834829463", status: true, cookie: true});
 
-function postToFeed(url) {
+function postToLyly(token) {
     // Get server name (helps work with prod or dev here!!)
     var _lyServer = "http://" + window.location.hostname;
     if ( window.location.hostname == "loyally.local" ) { _lyServer = _lyServer + ":9000" }
@@ -49,37 +38,7 @@ function postToFeed(url) {
                     var token = jsonResponse.token;
                     console.log("Returned URL from Json = " + _goUrl + token);
                     //var title = document.title;
-                    var caption = title;
-                    // if ( description == null) { description = ""};
-                    //if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
-                    image="http://beta.loyally.me/assets/img/loyally.jpg";
-                    console.log("Image URL = " + image);
-                    /*
-                        Handle post to Facebook feed
-                     */
-
-                        // Use FB API (only works if FB appId is configured for this domain
-                        var obj = {
-                            method: 'feed',
-                            //redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
-                            link: _goUrl + token,
-                            picture: image,
-                            name: title,
-                            caption: caption,
-                            description: description
-
-                        }
-                        console.log(obj);
-                        function callback(response) {
-                            //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
-                            // TODO - Provide a better message here??
-                            //document.getElementById('msg').innerHTML = "Thank you for sharing!";
-                            // Redirect to thank you page!!!
-                            console.log("URL shared on FB: Redirecting back to " + url);
-                            window.location.assign(url);
-                        }
-                        FB.ui(obj, callback);
-
+                    console.log("Finishing for now, but should really close the window!!!");
             }
     }
 
@@ -87,7 +46,7 @@ function postToFeed(url) {
         Handle facebook login as required
      */
 
-    // Setup some default values
+    // Setup some default values - FB should always pass this as the user is logged in to do the successful post???
     var fbId=0;
     var fbName="NOT_AUTHORISED";
     var fbEmail="NOT_AUTHORISED";
@@ -98,17 +57,19 @@ function postToFeed(url) {
                 fbId = response.id;         //console.log("login/FB.id:"+fbId);
                 fbName = response.name;     //console.log("login/FB.name:"+fbName);
                 fbEmail = response.email;   //console.log("login/FB.email:"+fbEmail);
+
+                /* Now updated loyally with the users FB details */
+
                 //var postUrl = _lyServer + "/api/v01/share/register_url";
                 var postUrl = _lyServer + "/api/v01/share/register_url";
                 console.log("About to POST to " + postUrl);
                 xmlhttp.open("POST",postUrl);
                 xmlhttp.setRequestHeader("Content-Type", "application/json");
                 var jsonRequest=JSON.stringify({
-                    "url" : url,
+                    "token" : token,
                     "facebook_id" : fbId,
                     "facebook_name" : fbName,
-                    "facebook_email" : fbEmail,
-                    "scheme" : lyId
+                    "facebook_email" : fbEmail
                 });
                 console.log('Now lets call loyally() with json ' + jsonRequest);
                 xmlhttp.send(jsonRequest);
@@ -132,7 +93,7 @@ function postToFeed(url) {
 // From http://stackoverflow.com/questions/65434/getting-notified-when-the-page-dom-has-loaded-but-before-window-onload
 
 $(document).ready ( function() {
-    console.log("Page loaded - ready to post " + url + " to Facebook!!");
-    postToFeed(url);
+    console.log("Page loaded - ready to update share " + _lyToken + " with Facebook user details!!");
+    postToLyly(_lyToken);
 })
 

@@ -41,9 +41,9 @@ function _lShare() {
 
     if (lyFbA == 1) {
 
+        console.log("I'm here as we're calling FB directly!!");
         FB.init({appId: "518644834829463", status: true, cookie: true});
 
-        console.log("I'm here as we're calling FB directly!!");
         // Post to FB directly, so get shareURL from loyally first
         var xmlhttp;
         if (window.XMLHttpRequest)
@@ -95,9 +95,11 @@ function _lShare() {
         var url = window.location.href;
         var title = document.title; if ( title == null ) { title = "Sharing this page with you..."}
         var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
-        var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
-        var image = document.getElementById('img'); if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
-        console.log("Image from site = " + image);
+        var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,80)+"..."};
+        // TODO - Add in image handling here so that it can cater for relative URLs
+        // var image = document.getElementById('img'); if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
+        var image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"
+        // TODO - Popup a new window here???
         var fbShareUrl=_lyServer + "/fb_url_share/" +
             encodeURIComponent(lyId) + "/" +
             encodeURIComponent(lyDmn) + "/" +
@@ -107,7 +109,9 @@ function _lShare() {
             encodeURIComponent(description) + "/" +
             encodeURIComponent(image);
         console.log(fbShareUrl);
-        window.location.assign(fbShareUrl);
+        // window.location.assign(fbShareUrl);
+        // Open a new window for the fbShareUrl and switch off toolbar and menubar.  For now we will allow location to be displayed
+        window.open(fbShareUrl, '_blank', 'toolbar=0,location=1,menubar=0');
     }
 
     /*
