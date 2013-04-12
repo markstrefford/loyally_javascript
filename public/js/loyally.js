@@ -28,41 +28,114 @@
 
 // Client side loyally javascript
 
+/*
+ * Cookie handling
+ *
+ * From http://www.quirksmode.org/js/cookies.html
+ */
+function createCookie(name, value, days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
+    }
+    else var expires = "";
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+function eraseCookie(name) {
+    createCookie(name, "", -1);
+}
+
+function setLoyallyCookie() {
+    var cookie_name = "_id";
+    var cookie_value = Math.random().toString(36);
+    var cookie_expires = 2 * 365;  // Set expiry for 2 years in the future
+    createCookie(cookie_name, cookie_value, cookie_expires);
+}
+
+/*
+ * URL Sharing functionality
+ */
 function _lShare() {
-    if ( _lyD == 0 ) {var _lyServer="http://beta.loyally.me";} else {var _lyServer="http://loyally.local:9000";}
+
+    if (_lyD == 0) {
+        var _lyServer = "http://beta.loyally.me";
+    } else {
+        var _lyServer = "http://loyally.local:9000";
+        console.log("Development mode!!");
+    }
 
     /*
-        Get the ShareID from loyally.com
-      */
+     Get the ShareID from loyally.com
+     */
 
     // Based on http://www.w3schools.com/ajax/ajax_xmlhttprequest_onreadystatechange.asp
     // and http://www.w3schools.com/ajax/tryit.asp?filename=tryajax_first
 
 
     if (lyFbA == 1) {
+        // TODO - This probably all needs ripping out!!!
 
-        console.log("I'm here as we're calling FB directly!!");
+        if (_lyD == 1) {
+            console.log("I'm here as we're calling FB directly!!");
+        }
         FB.init({appId: "518644834829463", status: true, cookie: true});
 
         // Post to FB directly, so get shareURL from loyally first
         var xmlhttp;
-        if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
-            console.log("Setting up XMLHttpRequest()")
-            xmlhttp=new XMLHttpRequest();
+        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+            if (_lyD == 1) {
+                console.log("Setting up XMLHttpRequest()");
+            }
+            xmlhttp = new XMLHttpRequest();
         }
 
-        xmlhttp.onreadystatechange=function() {
-            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                var jsonResponse=JSON.parse(xmlhttp.responseText);
-                console.log(jsonResponse);
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var jsonResponse = JSON.parse(xmlhttp.responseText);
+                if (_lyD == 1) {
+                    console.log(jsonResponse);
+                }
                 var token = jsonResponse.token;
-                console.log("Returned URL from Json : " + _goUrl + token);
+                if (_lyD == 1) {
+                    console.log("Returned URL from Json : " + _goUrl + token);
+                }
 
-                var title = document.title; if ( title == null ) { title = "Sharing this page with you..."}
-                var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
-                var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
-                var image = document.getElementsByTagName('img')[0]; if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
+                var title = document.title;
+                if (title == null) {
+                    title = "Sharing this page with you..."
+                }
+                var caption = document.getElementsByTagName('h1')[0];
+                if (caption == null) {
+                    caption = title
+                } else {
+                    caption = caption.innerHTML
+                }
+                ;
+                var description = document.getElementsByTagName('p')[0];
+                if (description == null) {
+                    description = caption
+                } else {
+                    description = description.innerHTML.substr(1, 120) + "..."
+                }
+                ;
+                var image = document.getElementsByTagName('img')[0];
+                if (image == null) {
+                    image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"
+                }
+                ;
 
                 console.log("Sharing " + title);
 
@@ -84,23 +157,55 @@ function _lShare() {
                     // TODO - Provide a better message here??
                     document.getElementById('msg').innerHTML = "Thank you for sharing!";
                 }
+
                 FB.ui(obj, callback);
-            };
+            }
+            ;
         }
 
     } else {
-        console.log("I'm here as we're calling loyally directly!!");
+        if (_lyD == 1) {
+            console.log("** I'm here as we're calling loyally directly!! **");
+        }
 
-        // Use share.php
         var url = window.location.href;
-        var title = document.title; if ( title == null ) { title = "Sharing this page with you..."}
-        var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
-        var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,80)+"..."};
+        if (window.location.hash.length > 0) {
+            url = url.split("#", 1);
+            console.log("# found, so removed hash!!");
+        }
+        console.log(url);
+        var title = document.title;
+        if (title == null) {
+            title = "Sharing this page with you..."
+        }
+        var caption = document.getElementsByTagName('h1')[0];
+        if (caption == null) {
+            caption = title
+        } else {
+            caption = caption.innerHTML
+        }
+        ;
+        var description = document.getElementsByTagName('p')[0];
+        if (description == null) {
+            description = caption
+        } else {
+            description = description.innerHTML.substr(1, 80) + "..."
+        }
+        ;
+
+        // Set a cookie so that we know not to count visits to this URL in the future as a click on a share (stops people clicking themselves to get lots of points!!)
+        setLoyallyCookie();
+        if (_lyD == 1) {
+            console.log("Set loyally cookie as this URL has been shared by this browser with loyally.me!");
+        }
+
+
         // TODO - Add in image handling here so that it can cater for relative URLs
         // var image = document.getElementById('img'); if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
         var image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"
-        // TODO - Popup a new window here???
-        var fbShareUrl=_lyServer + "/fb_url_share/" +
+
+        // Now prepare what we need for sharing on FB
+        var fbShareUrl = _lyServer + "/api/v01/share/fb/" +
             encodeURIComponent(lyId) + "/" +
             encodeURIComponent(lyDmn) + "/" +
             encodeURIComponent(url) + "/" +
@@ -108,132 +213,118 @@ function _lShare() {
             encodeURIComponent(caption) + "/" +
             encodeURIComponent(description) + "/" +
             encodeURIComponent(image);
-        console.log(fbShareUrl);
-        // window.location.assign(fbShareUrl);
-        // Open a new window for the fbShareUrl and switch off toolbar and menubar.  For now we will allow location to be displayed
-        window.open(fbShareUrl, '_blank', 'toolbar=0,location=1,menubar=0');
+        if (_lyD == 0) {
+            // Open a new window for the /fb_share process and switch off toolbar and menubar.  For now we will allow location to be displayed
+            window.open(fbShareUrl, '_blank', 'toolbar=0,location=1,menubar=0');
+        } else {
+            // In dev mode, use the same window so we can track URLs easier!!
+            console.log("Redirecting to " + fbShareUrl);
+            window.location.href = fbShareUrl;
+        }
     }
 
-    /*
-        Handle facebook login as required
-     */
 
-    // Setup some default values - note these are only used if loyally.js is the one calling Facebook
-    var fbId=0;
-    var fbName="NOT_AUTHORISED";
-    var fbEmail="NOT_AUTHORISED";
-    if (lyFbA == 1) {
-        FB.login(function(response) {
-            if (response.authResponse) {
-                console.log('Welcome!  JsonCall() is fetching your information.... ');
-                FB.api('/me', function(response) {
-                   fbId = response.id;         //console.log("login/FB.id:"+fbId);
-                   fbName = response.name;     //console.log("login/FB.name:"+fbName);
-                   fbEmail = response.email;   //console.log("login/FB.email:"+fbEmail);
-                    xmlhttp.open("POST", _lyServer + "/api/v01/share/register_url");
-                    xmlhttp.setRequestHeader("Content-Type", "application/json");
-                    var jsonRequest=JSON.stringify({"url" : window.location.href,
-                            "facebook_id" : fbId,
-                            "facebook_name" : fbName,
-                            "facebook_email" : fbEmail,
-                            "scheme" : lyId});
-                    xmlhttp.send(jsonRequest);
-                });
-                console.log('Now lets call loyally()');
-            } else {
-                console.log('User cancelled login or did not fully authorize.');
-                // TODO - What to do if not authorised???
-                // TODO - Alert box perhaps?  "You need to log in to share on Facebook" ??
-            }
-        }, {scope: 'email'});
-    } else {
-        console.log("Not calling FB directly here, so need to get ready for redirect to loyally.me!");
-        console.log("Sharing " + title);
-
-
-    }
-
-    // Get details for this page
-    function getPageInfo() {
-        var url = window.location.href;
-        var title = document.title; if ( title == null ) { title = "Sharing this page with you..."}
-        var caption = document.getElementsByTagName('h1')[0]; if ( caption == null) { caption = title } else { caption = caption.innerHTML };
-        var description = document.getElementsByTagName('p')[0]; if ( description == null) { description = caption} else { description = description.innerHTML.substr(1,120)+"..."};
-        var image = document.getElementsByTagName('img')[0]; if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
-    }
 }
+
 
 /*
 
-    When a page of this site loads, we want to see if there is a ?shareID=nnnnn value and post this back to loyally
+ When a page of this site loads, we want to see if there is a #nnnnn value and post this back to loyally
 
 
-  */
+ */
 
-// From http://stackoverflow.com/questions/65434/getting-notified-when-the-page-dom-has-loaded-but-before-window-onload
 
-function loadPageVar (sVar) {
-    return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+$(document).ready(function () {
+    if (_lyD == 1) {
+        console.log("Page loaded - Checking if this is some loyally activity for scheme " + lyId + "!!");
     }
-
-$(document).ready ( function() {
-    console.log("Page loaded - Checking if this is some loyally activity for scheme " + lyId + "!!");
     var url = window.location.href;
-    console.log("Current page URL is " + url);
-
-    // From https://developer.mozilla.org/en-US/docs/DOM/window.location#Location%5Fobject
-    //var oGetVars = {};
-
-if (window.location.search.length > 1) {
-    // Probably use this later to keep all other search values in URL
-    //for (var aItKey, nKeyId = 0, aCouples = window.location.search.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
-    //    aItKey = aCouples[nKeyId].split("=");
-    //    oGetVars[unescape(aItKey[0])] = aItKey.length > 1 ? unescape(aItKey[1]) : "";
-    //}
-var shareID = loadPageVar("shareID");
-console.log("Found shareID : " + shareID);
-} else {
-    console.log("No shareID specified on this page");
+    if (_lyD == 1) {
+        console.log("Current page URL is " + url);
     }
 
-//console.log("Found shareID : " + oGetVars.shareID);
-
-// Now remove shareID from URL and redirect just to main URL
-// http://www.w3schools.com/js/js_window_location.asp
-// TODO - This currently removes all parameters after the "?" so needs to work better!!!
-if (shareID != null) {
-    var locationend = url.indexOf('?');
-    var new_url = url.substr(0, locationend);
-
-    // Fire off the loyally webservice call here!!!
-    var xmlhttpget;
-    if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari
-    console.log("Activity: Setting up XMLHttpRequest()")
-    xmlhttpget=new XMLHttpRequest();
+    // TODO - Make this more intelligent??
+    if (_lyD == 0) {
+        var _lyServer = "http://beta.loyally.me";
+    } else {
+        var _lyServer = "http://loyally.local:9000";
     }
 
-// Removed code for IE5/6
-console.log("About to call xmlhttp.onreadystatechange() for Activity")
-xmlhttpget.onreadystatechange=function() {
-    console.log("Now checking for xmlhttp.readyState==4 and xmlhttp.status=200");
+    // Do we have a cookie?  If so, this browser has shared this specific domain before.  Therefore lets not count this click as an accrual!
+    var value = readCookie("_id");
+    if (value === null) {
+        if (_lyD == 1) {
+            console.log("Cookie _id not found so this URL wasn't shared by this browser, therefore log this view with loyally backend");
+        }
+        if (window.location.hash.length > 1) {
 
-    if (xmlhttpget.readyState==4 && xmlhttpget.status==200) {
-    console.log("readystate=4 and status=200!!");
-    console.log("So activity recorded!!");
+            var shareID = window.location.hash.substr(1, 15);
+            if (_lyD == 1) {
+                console.log("Found shareID : " + shareID);
+            }
+            // Fire off the loyally webservice call here!!!
+            var xmlhttpget;
+
+            if (window.XMLHttpRequest) {
+                if (_lyD == 1) {
+                    console.log("Activity: Setting up XMLHttpRequest()");
+                }
+                xmlhttpget = new XMLHttpRequest();
+            }
+
+            // Fire off the loyally webservice call here!!!
+            var xmlhttpget;
+            if (window.XMLHttpRequest) {
+                if (_lyD == 1) {
+                    {
+                        console.log("Activity: Setting up XMLHttpRequest()");
+                    }
+                    xmlhttpget = new XMLHttpRequest();
+                    if (_lyD == 1) {
+                        console.log("About to do a GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
+                    }
+                    xmlhttpget.open("GET", _lyServer + "/api/v01/share/activity/" + shareID, true);
+                    xmlhttpget.send();
+                    if (_lyD == 1) {
+                        console.log("Done our GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
+                    }
+
+                }
+
+                if (_lyD == 1) {
+                    console.log("About to call xmlhttp.onreadystatechange() for Activity");
+                }
+                xmlhttpget.onreadystatechange = function () {
+                    if (_lyD == 1) {
+                        console.log("Now checking for xmlhttp.readyState==4 and xmlhttp.status=200");
+                    }
+
+                    if (xmlhttpget.readyState == 4 && xmlhttpget.status == 200) {
+                        if (_lyD == 1) {
+                            console.log("readystate=4 and status=200 so activity recorded!!");
+                        }
+                        // Set a cookie so that we know not to count visits to this URL again in the future as a click on a share (stops people clicking reload to get lots of points!!)
+                        if (_lyD == 1) {
+                            console.log("Setting loyally cookie as this view has been logged at loyally.me!");
+                        }
+                        setLoyallyCookie();
+                    }
+
+                }
+
+            } else {
+                if (_lyD == 1) {
+                    console.log("No shareID found on this page, exiting...");
+                }
+            }
+        } else {
+            if (_lyD == 1) {
+                console.log("Cookie _id was found so URL has been shared by this browser, therefore don't log with loyally backend");
+            }
+        }
+
     }
-}
-
-console.log("About to do a GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
-xmlhttpget.open("GET", _lyServer + "/api/v01/share/activity/" + shareID, true);
-xmlhttpget.send();
-console.log("Done our GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
-
-
-console.log("Activity: Redirecting to " + new_url);
-window.location.assign(new_url);
-
-}
-
 })
+
 
