@@ -236,6 +236,8 @@ function _lShare() {
 
 
 $(document).ready(function () {
+    console.log("Page loaded - Checking if this is some loyally activity for scheme " + lyId + "!!");
+
     if (_lyD == 1) {
         console.log("Page loaded - Checking if this is some loyally activity for scheme " + lyId + "!!");
     }
@@ -277,53 +279,50 @@ $(document).ready(function () {
             var xmlhttpget;
             if (window.XMLHttpRequest) {
                 if (_lyD == 1) {
-                    {
-                        console.log("Activity: Setting up XMLHttpRequest()");
-                    }
-                    xmlhttpget = new XMLHttpRequest();
-                    if (_lyD == 1) {
-                        console.log("About to do a GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
-                    }
-                    xmlhttpget.open("GET", _lyServer + "/api/v01/share/activity/" + shareID, true);
-                    xmlhttpget.send();
-                    if (_lyD == 1) {
-                        console.log("Done our GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
-                    }
-
+                    console.log("Activity: Setting up XMLHttpRequest()");
                 }
-
+                xmlhttpget = new XMLHttpRequest();
                 if (_lyD == 1) {
-                    console.log("About to call xmlhttp.onreadystatechange() for Activity");
+                    console.log("About to do a GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
                 }
-                xmlhttpget.onreadystatechange = function () {
-                    if (_lyD == 1) {
-                        console.log("Now checking for xmlhttp.readyState==4 and xmlhttp.status=200");
-                    }
-
-                    if (xmlhttpget.readyState == 4 && xmlhttpget.status == 200) {
-                        if (_lyD == 1) {
-                            console.log("readystate=4 and status=200 so activity recorded!!");
-                        }
-                        // Set a cookie so that we know not to count visits to this URL again in the future as a click on a share (stops people clicking reload to get lots of points!!)
-                        if (_lyD == 1) {
-                            console.log("Setting loyally cookie as this view has been logged at loyally.me!");
-                        }
-                        setLoyallyCookie();
-                    }
-
-                }
-
-            } else {
+                xmlhttpget.open("GET", _lyServer + "/api/v01/share/activity/" + shareID, true);
+                xmlhttpget.send();
                 if (_lyD == 1) {
-                    console.log("No shareID found on this page, exiting...");
+                    console.log("Done our GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
                 }
+
             }
+
+            if (_lyD == 1) {
+                console.log("About to call xmlhttp.onreadystatechange() for Activity");
+            }
+            xmlhttpget.onreadystatechange = function () {
+                if (_lyD == 1) {
+                    console.log("Now checking for xmlhttp.readyState==4 and xmlhttp.status=200");
+                }
+
+                if (xmlhttpget.readyState == 4 && xmlhttpget.status == 200) {
+                    if (_lyD == 1) {
+                        console.log("readystate=4 and status=200 so activity recorded!!");
+                    }
+                    // Set a cookie so that we know not to count visits to this URL again in the future as a click on a share (stops people clicking reload to get lots of points!!)
+                    if (_lyD == 1) {
+                        console.log("Setting loyally cookie as this view has been logged at loyally.me!");
+                    }
+                    setLoyallyCookie();
+                }
+
+            }
+
         } else {
             if (_lyD == 1) {
-                console.log("Cookie _id was found so URL has been shared by this browser, therefore don't log with loyally backend");
+                console.log("No shareID found on this page, exiting...");
             }
         }
-
+    } else {
+        if (_lyD == 1) {
+            console.log("Cookie _id was found so URL has been shared by this browser, therefore don't log with loyally backend");
+        }
     }
 })
 
