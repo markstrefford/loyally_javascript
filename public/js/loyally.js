@@ -189,7 +189,7 @@ function _lShare() {
         if (description == null) {
             description = caption
         } else {
-            description = description.innerHTML.substr(1, 80) + "..."
+            description = description.innerHTML.substr(0, 80) + "..."
         }
         ;
 
@@ -202,7 +202,7 @@ function _lShare() {
 
         // TODO - Add in image handling here so that it can cater for relative URLs
         // var image = document.getElementById('img'); if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
-        var image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"
+        var image = _lyServer + "/assets/img/share.jpg";
 
         // Now prepare what we need for sharing on FB
         var fbShareUrl = _lyServer + "/api/v01/share/fb/" +
@@ -236,7 +236,7 @@ function _lShare() {
 
 
 $(document).ready(function () {
-    console.log("Page loaded - Checking if this is some loyally activity for scheme " + lyId + "!!");
+    console.log("Scheme " + lyId);
 
     if (_lyD == 1) {
         console.log("Page loaded - Checking if this is some loyally activity for scheme " + lyId + "!!");
