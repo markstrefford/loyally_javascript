@@ -255,9 +255,9 @@ $(document).ready(function () {
 
     // Do we have a cookie?  If so, this browser has shared this specific domain before.  Therefore lets not count this click as an accrual!
     var value = readCookie("_id");
-    if (value === null) {
+    if (value === null || _lyD === 1 ) {
         if (_lyD == 1) {
-            console.log("Cookie _id not found so this URL wasn't shared by this browser, therefore log this view with loyally backend");
+            console.log("Cookie _id not found so this URL wasn't shared by this browser / this is dev mode so we're ignoring the cookie - therefore log this view with loyally backend");
         }
         if (window.location.hash.length > 1) {
 
