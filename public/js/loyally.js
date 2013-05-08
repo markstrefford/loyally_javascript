@@ -283,12 +283,12 @@ $(document).ready(function () {
                 }
                 xmlhttpget = new XMLHttpRequest();
                 if (_lyD == 1) {
-                    console.log("About to do a GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
+                    console.log("About to do a GET to " + _lyServer + "/api/v01/share/action/click/" + shareID);
                 }
-                xmlhttpget.open("GET", _lyServer + "/api/v01/share/activity/" + shareID, true);
+                xmlhttpget.open("GET", _lyServer + "/api/v01/share/action/click/" + shareID, true);
                 xmlhttpget.send();
                 if (_lyD == 1) {
-                    console.log("Done our GET to " + _lyServer + "/api/v01/share/activity/" + shareID);
+                    console.log("Done our GET to " + _lyServer + "/api/v01/share/action/click/" + shareID);
                 }
 
             }
