@@ -28,6 +28,27 @@
 
 // Client side loyally javascript
 
+
+/*
+    Are we in dev mode or prod?  Use presence of localhost in URL to determine dev
+ */
+function getDevMode() {
+    return (window.location.hostname.indexOf("localhost") != -1);
+}
+
+/*
+ Function to determine if we should be going to loyally.me or to localhost:9000
+ */
+
+function getLoyallyServer(devMode) {
+    if (devMode == true ) {
+        var server = "http://loyally.local:9000";
+    } else {
+        var server = "http://www.loyally.me";
+    }
+    return server;
+}
+
 /*
  * Cookie handling
  *
@@ -70,12 +91,9 @@ function setLoyallyCookie() {
  */
 function _lShare() {
 
-    if (_lyD == 0) {
-        var _lyServer = "http://beta.loyally.me";
-    } else {
-        var _lyServer = "http://loyally.local:9000";
-        console.log("Development mode!!");
-    }
+    var _lyD = getDevMode();
+    var _lyServer = getLoyallyServer(_lyD);
+    var lyDmn = window.location.hostname;
 
     /*
      Get the ShareID from loyally.com
@@ -85,142 +103,63 @@ function _lShare() {
     // and http://www.w3schools.com/ajax/tryit.asp?filename=tryajax_first
 
 
-    if (lyFbA == 1) {
-        // TODO - This probably all needs ripping out!!!
+    if (_lyD == 1) {
+        console.log("** I'm here as we're calling loyally directly!! **");
+    }
 
-        if (_lyD == 1) {
-            console.log("I'm here as we're calling FB directly!!");
-        }
-        FB.init({appId: "518644834829463", status: true, cookie: true});
-
-        // Post to FB directly, so get shareURL from loyally first
-        var xmlhttp;
-        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-            if (_lyD == 1) {
-                console.log("Setting up XMLHttpRequest()");
-            }
-            xmlhttp = new XMLHttpRequest();
-        }
-
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                var jsonResponse = JSON.parse(xmlhttp.responseText);
-                if (_lyD == 1) {
-                    console.log(jsonResponse);
-                }
-                var token = jsonResponse.token;
-                if (_lyD == 1) {
-                    console.log("Returned URL from Json : " + _goUrl + token);
-                }
-
-                var title = document.title;
-                if (title == null) {
-                    title = "Sharing this page with you..."
-                }
-                var caption = document.getElementsByTagName('h1')[0];
-                if (caption == null) {
-                    caption = title
-                } else {
-                    caption = caption.innerHTML
-                }
-                ;
-                var description = document.getElementsByTagName('p')[0];
-                if (description == null) {
-                    description = caption
-                } else {
-                    description = description.innerHTML.substr(1, 120) + "..."
-                }
-                ;
-                var image = document.getElementsByTagName('img')[0];
-                if (image == null) {
-                    image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"
-                }
-                ;
-
-                console.log("Sharing " + title);
-
-
-                // Use FB API (only works if FB appId is configured for this domain
-                var obj = {
-                    method: 'feed',
-                    //redirect_uri: 'http://loyally.local/~markstrefford/myblog.com/thankyou.html',
-                    link: _goUrl + token,
-                    picture: image,
-                    name: title,
-                    caption: caption,
-                    description: description
-
-                }
-
-                function callback(response) {
-                    //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
-                    // TODO - Provide a better message here??
-                    document.getElementById('msg').innerHTML = "Thank you for sharing!";
-                }
-
-                FB.ui(obj, callback);
-            }
-            ;
-        }
-
+    var url = window.location.href;
+    if (window.location.hash.length > 0) {
+        url = url.split("#", 1);
+        console.log("# found, so removed hash!!");
+    }
+    console.log(url);
+    var title = document.title;
+    if (title == null) {
+        title = "Sharing this page with you..."
+    }
+    var caption = document.getElementsByTagName('h1')[0];
+    if (caption == null) {
+        caption = title
     } else {
-        if (_lyD == 1) {
-            console.log("** I'm here as we're calling loyally directly!! **");
-        }
+        caption = caption.innerHTML
+    }
+    ;
+    var description = document.getElementsByTagName('p')[0];
+    if (description == null) {
+        description = caption
+    } else {
+        description = description.innerHTML.substr(0, 80) + "..."
+    }
+    ;
 
-        var url = window.location.href;
-        if (window.location.hash.length > 0) {
-            url = url.split("#", 1);
-            console.log("# found, so removed hash!!");
-        }
-        console.log(url);
-        var title = document.title;
-        if (title == null) {
-            title = "Sharing this page with you..."
-        }
-        var caption = document.getElementsByTagName('h1')[0];
-        if (caption == null) {
-            caption = title
-        } else {
-            caption = caption.innerHTML
-        }
-        ;
-        var description = document.getElementsByTagName('p')[0];
-        if (description == null) {
-            description = caption
-        } else {
-            description = description.innerHTML.substr(0, 80) + "..."
-        }
-        ;
-
-        // Set a cookie so that we know not to count visits to this URL in the future as a click on a share (stops people clicking themselves to get lots of points!!)
-        setLoyallyCookie();
-        if (_lyD == 1) {
-            console.log("Set loyally cookie as this URL has been shared by this browser with loyally.me!");
-        }
+    // Set a cookie so that we know not to count visits to this URL in the future as a click on a share (stops people clicking themselves to get lots of points!!)
+    setLoyallyCookie();
+    if (_lyD == 1) {
+        console.log("Set loyally cookie as this URL has been shared by this browser with loyally.me!");
+    }
 
 
-        // TODO - Add in image handling here so that it can cater for relative URLs
-        // var image = document.getElementById('img'); if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
-        var image = _lyServer + "/assets/img/share.jpg";
+    // TODO - Add in image handling here so that it can cater for relative URLs
+    // var image = document.getElementById('img'); if ( image == null ) { image = "http://www.mouserunner.net/Index_Graphics/Free_Graphics_Logo.png"};
+    var image = _lyServer + "/assets/img/share.jpg";
 
-        // Now prepare what we need for sharing on FB
-        var fbShareUrl = _lyServer + "/api/v01/share/fb/" +
-            encodeURIComponent(lyId) + "/" +
-            encodeURIComponent(lyDmn) + "/" +
-            encodeURIComponent(url) + "/" +
-            encodeURIComponent(title) + "/" +
-            encodeURIComponent(caption) + "/" +
-            encodeURIComponent(description) + "/" +
-            encodeURIComponent(image);
-        if (_lyD == 0) {
-            // Open a new window for the /fb_share process and switch off toolbar and menubar.  For now we will allow location to be displayed
-            window.open(fbShareUrl, '_blank', 'toolbar=0,location=1,menubar=0');
-        } else {
-            // In dev mode, use the same window so we can track URLs easier!!
-            console.log("Redirecting to " + fbShareUrl);
-            window.location.href = fbShareUrl;
-        }
+    // Now prepare what we need for sharing on FB
+    var fbShareUrl = _lyServer + "/api/v01/share/fb/" +
+        encodeURIComponent(lyId) + "/" +
+        encodeURIComponent(lyDmn) + "/" +
+        encodeURIComponent(url) + "/" +
+        encodeURIComponent(title) + "/" +
+        encodeURIComponent(caption) + "/" +
+        encodeURIComponent(description) + "/" +
+        encodeURIComponent(image);
+    if (_lyD == 0) {
+        // Open a new window for the /fb_share process and switch off toolbar and menubar.  For now we will allow location to be displayed
+        console.log("Redirecting to " + fbShareUrl);
+        window.open(fbShareUrl, '_blank', 'toolbar=0,location=1,menubar=0');
+    } else {
+        // In dev mode, use the same window so we can track URLs easier!!
+        console.log("Redirecting to " + fbShareUrl);
+        window.location.href = fbShareUrl;
     }
 
 
@@ -233,23 +172,21 @@ function renderLoyallyButtons() {
     var elements = document.getElementsByClassName("loyally"),
         n = elements.length;
     // Now loop through them
-    for ( i=0 ; i < n; i++ ) {
+    for (i = 0; i < n; i++) {
         // Get next element
         var element = elements[i];
         elementClass = element.className;
         // Split out the list into an array
         var params = elementClass.split(" ");
         // If there is a 2nd parameter, then this is the action
-        action = params[1]; console.log(action);
-        if ( action === null ) {
-            action = "share"
-        }
+        action = params[1];
         // Render the appropriate markup depending on the action defined
         switch (action) {
             case 'buy':
                 // TODO - Need to check if this really works!! Not sure it is calling the JS???
                 element.innerHTML = "<div onload='console.log(action);'></div>";
                 break;
+            // Add other actions here as required...
             default:
                 element.innerHTML = "<a href=\"#\" onclick='_lShare()'; return false;'><img src=\"public/img/fbshare.png\" />&nbsp;Share on Facebook</a></p>";
         }
@@ -258,37 +195,33 @@ function renderLoyallyButtons() {
 
 }
 
+
 /*
 
  When a page of this site loads, we want to see if there is a #nnnnn value and post this back to loyally
 
-
  */
 
-
 $(document).ready(function () {
-    console.log("Scheme " + lyId);
 
     renderLoyallyButtons();
+    var _lyD = getDevMode();
+    var _lyServer = getLoyallyServer(_lyD);
 
-    if (_lyD == 1) {
-        console.log("Page loaded - Checking if this is some loyally activity for scheme " + lyId + "!!");
-    }
+    console.log("Dev mode = " + _lyD + " / server = " + _lyServer);
+    console.log("Scheme " + lyId);
+
     var url = window.location.href;
     if (_lyD == 1) {
         console.log("Current page URL is " + url);
     }
 
     // TODO - Make this more intelligent??
-    if (_lyD == 0) {
-        var _lyServer = "http://beta.loyally.me";
-    } else {
-        var _lyServer = "http://loyally.local:9000";
-    }
+
 
     // Do we have a cookie?  If so, this browser has shared this specific domain before.  Therefore lets not count this click as an accrual!
     var value = readCookie("_id");
-    if (value === null || _lyD == 1 ) {
+    if (value === null || _lyD == 1) {
         if (_lyD == 1) {
             console.log("Cookie _id not found so this URL wasn't shared by this browser / this is dev mode so we're ignoring the cookie - therefore log this view with loyally backend");
         }
