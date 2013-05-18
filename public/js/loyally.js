@@ -226,6 +226,37 @@ function _lShare() {
 
 }
 
+function renderLoyallyButtons() {
+    console.log("Getting elements by class name loyally");
+
+    // Get all occurances of the loyally class
+    var elements = document.getElementsByClassName("loyally"),
+        n = elements.length;
+    // Now loop through them
+    for ( i=0 ; i < n; i++ ) {
+        // Get next element
+        var element = elements[i];
+        elementClass = element.className;
+        // Split out the list into an array
+        var params = elementClass.split(" ");
+        // If there is a 2nd parameter, then this is the action
+        action = params[1]; console.log(action);
+        if ( action === null ) {
+            action = "share"
+        }
+        // Render the appropriate markup depending on the action defined
+        switch (action) {
+            case 'buy':
+                // TODO - Need to check if this really works!! Not sure it is calling the JS???
+                element.innerHTML = "<div onload='console.log(action);'></div>";
+                break;
+            default:
+                element.innerHTML = "<a href=\"#\" onclick='_lShare()'; return false;'><img src=\"public/img/fbshare.png\" />&nbsp;Share on Facebook</a></p>";
+        }
+
+    }
+
+}
 
 /*
 
@@ -237,6 +268,8 @@ function _lShare() {
 
 $(document).ready(function () {
     console.log("Scheme " + lyId);
+
+    renderLoyallyButtons();
 
     if (_lyD == 1) {
         console.log("Page loaded - Checking if this is some loyally activity for scheme " + lyId + "!!");
