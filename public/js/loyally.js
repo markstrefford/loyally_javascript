@@ -188,7 +188,7 @@ function renderLoyallyButtons() {
                 break;
             // Add other actions here as required...
             default:
-                element.innerHTML = "<a href=\"#\" onclick='_lShare()'; return false;'><img src=\"public/img/fbshare.png\" />&nbsp;Share on Facebook</a></p>";
+                element.innerHTML = "<a href=\"#\" onclick='_lShare(); return false;'><img src=\"assets/img/fbshare.png\" />&nbsp;Share on Facebook</a>";
         }
 
     }
